@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>King Courier</title>
+
+    <link href="{% static 'styles/StyleReset.css' %}" rel="stylesheet" />
+    <link
+      rel="shortcut icon"
+      href="https://i.ibb.co/BNKMsn3/imageonline-co-transparentimage.png"
+      type="image/x-icon"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    <link href="{% static 'styles/homeStyle.css' %}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="imageButtons">
+      <div class="image-presentacion">
+        <img
+          src="https://i.ibb.co/W00hk5n/King-Courier-Presentaci-n-169.png"
+          alt="Imagen"
+        />
+      </div>
+      <div class="image-transparente">
+        <img
+          src="https://i.ibb.co/BNKMsn3/imageonline-co-transparentimage.png"
+          alt="Imagen"
+        />
+      </div>
+
+      <div class="contenedor">
+        <div class="auth">
+          <div class="auth__body">
+            <form
+              action="{% url 'home' %}"
+              method="POST"
+              class="form"
+              autocomplete="off"
+            >
+              {{error}} {% csrf_token %}
+              <div class="form_body">
+                <div>
+                  <div class="form-group">
+                    <label class="text-uppercase small">Usuario</label>
+                    <input
+                      type="text"
+                      name="username"
+                      class="form-control"
+                      placeholder="User"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="text-uppercase small">Contraseña</label>
+                    <input
+                      type="password"
+                      name="password"
+                      class="form-control"
+                      placeholder="Password"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form_actions">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                  Iniciar Sesion
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

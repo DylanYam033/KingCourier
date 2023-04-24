@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html' %} {% block content %}
+<h1>Mensajeros</h1>
+
+{% for mensajero in mensajeros %}
+{% comment %} <ul>
+  <li>
+    <a href="{% url 'detalle_mensajero' mensajero.id %}">
+      
+    </a>
+
+    <a href="{% url 'editar_mensajero' mensajero.id %}">Editar</a>
+
+    <form method="post" action="{% url 'eliminar_mensajero' mensajero.id %}">
+      {% csrf_token %}
+      <button type="submit">Eliminar</button>
+    </form>
+  </li>
+</ul> {% endcomment %}
+
+<p>{{ mensajero.nombre }}</p>
+{% endfor %} {% endblock content %}

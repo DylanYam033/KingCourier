@@ -1,0 +1,148 @@
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
+from .models import Cliente, Sucursale
+from .forms import CreateCliente, SucursaleForm
+from django.contrib.auth.decorators import login_required
+
+# Create your views here.
+
+# listar clientes registrados
+
+
+@login_required
+def cliente(request):
+    cliente = Cliente.objects.filter(activo=True)
+    if cliente.exists():
+        return render(request, 'clientes/index.html', {
+            'clientes': cliente
+        })
+    else:
+        message = "No hay clientes registrados"
+        return render(request, 'clientes/index.html', {
+            'message': message
+        })
+
+# crear clientes
+
+
+def create_cliente(request):
+    if request.method == 'GET':
+        return render(request, 'clientes/create.html', {
+            'createForm': CreateCliente()
+        })
+    else:
+        data = CreateCliente(request.POST)
+        if data.is_valid():
+            # Agrega una validación personalizada para la identificación
+            identificacion = data.cleaned_data['identificacion']
+            if Cliente.objects.filter(identificacion=identificacion).exists():
+                return render(request, 'clientes/create.html', {
+                    'createForm': data,
+                    'error': 'La identificación ya existe'
+                })
+
+            new_cliente = data.save(commit=False)
+            new_cliente.user = request.user
+            new_cliente.save()
+            return redirect('clientes')
+        else:
+            return render(request, 'clientes/create.html', {
+                'createForm': data,
+                'error': 'Datos inválidos'
+            })
+
+
+# detalles de un cliente
+def detalle_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    return render(request, 'clientes/detail.html', {
+        'cliente': cliente
+    })
+
+# editar cliente
+
+
+def editar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    if request.method == 'POST':
+        form = CreateCliente(request.POST, instance=cliente)
+        if form.is_valid():
+            form.save()
+            return redirect('detalle_cliente', cliente_id=cliente.id)
+    else:
+        form = CreateCliente(instance=cliente)
+    return render(request, 'clientes/edit.html', {
+        'form': form, 'cliente': cliente
+    })
+
+# eliminar cliente
+
+
+def eliminar_cliente(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    cliente.activo = False
+    cliente.save()
+    return redirect('clientes')
+
+
+# listar sucursales registradas
+def sucursal(request):
+    sucursal = Sucursale.objects.filter(activo=True)
+    if sucursal.exists():
+        return render(request, 'sucursales/index.html', {
+            'sucursales': sucursal
+        })
+    else:
+        message = "No hay clientes registrados"
+        return render(request, 'sucursales/index.html', {
+            'message': message
+        })
+
+
+def create_sucursal(request):
+    if request.method == 'GET':
+        return render(request, 'sucursales/create.html', {
+            'createForm': SucursaleForm
+        })
+    else:
+        try:
+            data = SucursaleForm(request.POST)
+            new_sucursal = data.save(commit=False)
+            new_sucursal.user = request.user
+            new_sucursal.save()
+            return redirect('sucursales')
+        except ValueError:
+            return render(request, 'sucursales/create.html', {
+                'createForm': SucursaleForm,
+                'error': 'Datos invalidos'
+            })
+
+
+def detalle_sucursal(request, sucursal_id):
+    sucursal = get_object_or_404(Sucursale, pk=sucursal_id)
+    return render(request, 'sucursales/detail.html', {
+        'sucursal': sucursal
+    })
+
+# editar cliente
+
+
+def editar_sucursal(request, sucursal_id):
+    sucursal = get_object_or_404(Sucursale, pk=sucursal_id)
+    if request.method == 'POST':
+        form = SucursaleForm(request.POST, instance=sucursal)
+        if form.is_valid():
+            form.save()
+            return redirect('detalle_sucursal', sucursal_id=sucursal.id)
+    else:
+        form = SucursaleForm(instance=sucursal)
+    return render(request, 'sucursales/edit.html', {
+        'form': form, 'sucursal': sucursal
+    })
+
+
+def eliminar_sucursal(request, sucursal_id):
+    sucursal = get_object_or_404(Sucursale, pk=sucursal_id)
+    sucursal.activo = False
+    sucursal.save()
+    return redirect('sucursales')
