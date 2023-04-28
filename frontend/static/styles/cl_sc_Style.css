@@ -1,0 +1,43 @@
+/* estilos generales: */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* estilos para el navbar */
+
+.navbar {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.navbar .container {
+  margin: 0;
+}
+
+.navbar .nav-link {
+  padding: 0;
+}
+
+.navbar .navbar-brand {
+  padding-left: 5rem;
+}
+
+#navbarSupportedContent {
+  padding-right: 5rem;
+}
+
+.active {
+  border-bottom: 0.1rem solid #d6af81;
+}
+
+.navbar .btn {
+  background-color: #d6af81;
+  color: white;
+}
+
+.navbar .btn:hover {
+  background-color: black;
+  color: white;
+}
