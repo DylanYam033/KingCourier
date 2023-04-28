@@ -5,22 +5,6 @@ from . import views
 urlpatterns = [
     path("", views.cliente, name="clientes"),
     path("create/", views.create_cliente, name="create_cliente"),
-<<<<<<< HEAD
-    path('cliente/<int:cliente_id>/',
-         views.detalle_cliente, name='detalle_cliente'),
-    path('cliente/<int:cliente_id>/editar/',
-         views.editar_cliente, name='editar_cliente'),
-    path('cliente/<int:cliente_id>/eliminar/',
-         views.eliminar_cliente, name='eliminar_cliente'),
-    path("sucursales/", views.sucursal, name="sucursales"),
-    path("sucursales/create/", views.create_sucursal, name="create_sucursal"),
-    path('sucursal/<int:sucursal_id>/',
-         views.detalle_sucursal, name='detalle_sucursal'),
-    path('sucursal/<int:sucursal_id>/editar/',
-         views.editar_sucursal, name='editar_sucursal'),
-    path('sucursal/<int:sucursal_id>/eliminar/',
-         views.eliminar_sucursal, name='eliminar_sucursal'),
-=======
     path('cliente/<int:cliente_id>/', views.detalle_cliente, name='detalle_cliente'),
     path('cliente/<int:cliente_id>/editar/', views.editar_cliente, name='editar_cliente'),
     path('cliente/<int:cliente_id>/eliminar/',views.eliminar_cliente, name='eliminar_cliente'),
@@ -29,5 +13,4 @@ urlpatterns = [
     path('sucursal/<int:sucursal_id>/', views.detalle_sucursal, name='detalle_sucursal'),
     path('sucursal/<int:sucursal_id>/editar/', views.editar_sucursal, name='editar_sucursal'),
     path('sucursal/<int:sucursal_id>/eliminar/', views.eliminar_sucursal, name='eliminar_sucursal'),
->>>>>>> 8257c1e (nuevo comienzo con clientes, sucursales, login y registro de usuarios funcional)
 ]

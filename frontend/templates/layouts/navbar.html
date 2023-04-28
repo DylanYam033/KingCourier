@@ -1,52 +1,54 @@
-<nav
-  class="navbar navbar-expand-md navbar-expand-lg top-navbar"
-  data-toggle="sticky-onscroll"
->
-  <a class="navbar-brand" href="/">
-    <img
-      src="https://i.ibb.co/BNKMsn3/imageonline-co-transparentimage.png"
-      alt="Imagen"
-      width="120"
-      height="120"
-    />
-  </a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
-    aria-expanded="true"
-    aria-label="Toggle navigation"
+<header>
+  <nav
+    class="navbar navbar-expand-md navbar-expand-lg top-navbar"
+    data-toggle="sticky-onscroll"
   >
-    <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
-  </button>
-  <div
-    class="navbar-collapse justify-content-end collapse"
-    id="navbarSupportedContent"
-  >
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'welcome' %}">Bienvenida</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'clientes' %}">Clientes</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'mensajeros' %}">Mensajeros</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'sucursales' %}">Sucursales</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Nosotros</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
-      </li>
-      <li class="nav-item">
-        <a class="btn" href="{% url 'logout' %}">Cerrar Sesion</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+    <a class="navbar-brand" href="{% url 'welcome' %}">
+      <img
+        src="https://i.ibb.co/BNKMsn3/imageonline-co-transparentimage.png"
+        alt="Imagen"
+        width="120"
+        height="120"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="true"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+    </button>
+    <div
+      class="navbar-collapse justify-content-end collapse"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'welcome' %}">Bienvenida</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'clientes' %}">Clientes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'mensajeros' %}">Mensajeros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'sucursales' %}">Sucursales</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pedidos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn" href="{% url 'logout' %}">Cerrar Sesion</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

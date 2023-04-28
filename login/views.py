@@ -3,27 +3,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import UserForm
-<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
-=======
-
->>>>>>> 8257c1e (nuevo comienzo con clientes, sucursales, login y registro de usuarios funcional)
 # Create your views here.
 
-
+@login_required
 def perfil(request):
-    return render(request, 'perfil.html')
+    return render(request, 'login/perfil.html', {
+        'titulo': 'Perfil',
+    })
 
 
-<<<<<<< HEAD
 def login_home(request):
     if request.method == 'GET':
-        return render(request, 'login.html')
-=======
-def home(request):
-    if request.method == 'GET':
-        return render(request, 'home.html')
->>>>>>> 8257c1e (nuevo comienzo con clientes, sucursales, login y registro de usuarios funcional)
+        return render(request, 'login/login.html')
 
     else:
         user = authenticate(
@@ -31,23 +23,14 @@ def home(request):
         print(request.POST)
         print(user)
         if user is None:
-<<<<<<< HEAD
-            return render(request, 'login.html', {
+            return render(request, 'login/login.html', {
                 'error': 'usuario o contraseña incorrectos'
             })
         else:
             login(request, user)
             return redirect('welcome')
 
-=======
-            return render(request, 'home.html', {
-                'error': 'username or password is incorrect'
-            })
-        else:
-            login(request, user)
-            return redirect('perfil')
->>>>>>> 8257c1e (nuevo comienzo con clientes, sucursales, login y registro de usuarios funcional)
-
+@login_required
 def user_create(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -56,13 +39,13 @@ def user_create(request):
             return redirect('perfil')
     else:
         form = UserForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'login/register.html', {
+        'titulo': 'Registrar Cuenta De Usuario',
+        'form': form
+    })
 
 
-<<<<<<< HEAD
 @login_required
 def log_out(request):
     logout(request)
     return redirect('home')
-=======
->>>>>>> 8257c1e (nuevo comienzo con clientes, sucursales, login y registro de usuarios funcional)

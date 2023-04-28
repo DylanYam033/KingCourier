@@ -41,3 +41,20 @@
   background-color: black;
   color: white;
 }
+
+@media (max-width: 1040px) {
+  .navbar .navbar-brand {
+    padding-left: 1rem;
+  }
+
+  #navbarSupportedContent {
+    padding-right: 1rem;
+  }
+  .nav-item {
+    font-size: 0.85rem;
+  }
+
+  .nav-item .btn {
+    font-size: 0.85rem;
+  }
+}

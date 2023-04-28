@@ -14,11 +14,13 @@ def cliente(request):
     cliente = Cliente.objects.filter(activo=True)
     if cliente.exists():
         return render(request, 'clientes/index.html', {
+            'titulo': 'Clientes',
             'clientes': cliente
         })
     else:
         message = "No hay clientes registrados"
         return render(request, 'clientes/index.html', {
+            'titulo': 'Clientes',
             'message': message
         })
 
@@ -28,6 +30,7 @@ def cliente(request):
 def create_cliente(request):
     if request.method == 'GET':
         return render(request, 'clientes/create.html', {
+            'titulo': 'Crear Cliente',
             'createForm': CreateCliente()
         })
     else:
@@ -37,6 +40,7 @@ def create_cliente(request):
             identificacion = data.cleaned_data['identificacion']
             if Cliente.objects.filter(identificacion=identificacion).exists():
                 return render(request, 'clientes/create.html', {
+                    'titulo': 'Crear Cliente',
                     'createForm': data,
                     'error': 'La identificación ya existe'
                 })
@@ -47,6 +51,7 @@ def create_cliente(request):
             return redirect('clientes')
         else:
             return render(request, 'clientes/create.html', {
+                'titulo': 'Crear Cliente',
                 'createForm': data,
                 'error': 'Datos inválidos'
             })
@@ -56,6 +61,7 @@ def create_cliente(request):
 def detalle_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     return render(request, 'clientes/detail.html', {
+        'titulo': 'Informacion Del Cliente',
         'cliente': cliente
     })
 
@@ -72,6 +78,7 @@ def editar_cliente(request, cliente_id):
     else:
         form = CreateCliente(instance=cliente)
     return render(request, 'clientes/edit.html', {
+        'titulo': 'Editar Cliente',
         'form': form, 'cliente': cliente
     })
 
@@ -90,11 +97,13 @@ def sucursal(request):
     sucursal = Sucursale.objects.filter(activo=True)
     if sucursal.exists():
         return render(request, 'sucursales/index.html', {
+            'titulo': 'Sucursales',
             'sucursales': sucursal
         })
     else:
         message = "No hay clientes registrados"
         return render(request, 'sucursales/index.html', {
+            'titulo': 'Sucursales',
             'message': message
         })
 
@@ -102,6 +111,7 @@ def sucursal(request):
 def create_sucursal(request):
     if request.method == 'GET':
         return render(request, 'sucursales/create.html', {
+            'titulo': 'Crear Sucursal',
             'createForm': SucursaleForm
         })
     else:
@@ -113,6 +123,7 @@ def create_sucursal(request):
             return redirect('sucursales')
         except ValueError:
             return render(request, 'sucursales/create.html', {
+                'titulo': 'Crear Sucursal',
                 'createForm': SucursaleForm,
                 'error': 'Datos invalidos'
             })
@@ -121,6 +132,7 @@ def create_sucursal(request):
 def detalle_sucursal(request, sucursal_id):
     sucursal = get_object_or_404(Sucursale, pk=sucursal_id)
     return render(request, 'sucursales/detail.html', {
+        'titulo': 'Informacion De La Sucursal',
         'sucursal': sucursal
     })
 
@@ -137,7 +149,9 @@ def editar_sucursal(request, sucursal_id):
     else:
         form = SucursaleForm(instance=sucursal)
     return render(request, 'sucursales/edit.html', {
-        'form': form, 'sucursal': sucursal
+        'titulo': 'Editar Sucursal',
+        'form': form, 
+        'sucursal': sucursal
     })
 
 
