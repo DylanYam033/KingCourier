@@ -151,3 +151,6 @@ EMAIL_PORT = 587
 # sustituir modelo de user
 
 AUTH_USER_MODEL = 'user.User'
+
+#URL login
+LOGIN_URL = '/'
