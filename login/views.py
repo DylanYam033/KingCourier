@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import UserForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -39,3 +40,7 @@ def user_create(request):
     return render(request, 'register.html', {'form': form})
 
 
+@login_required
+def log_out(request):
+    logout(request)
+    return redirect('login')
