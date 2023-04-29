@@ -27,7 +27,7 @@ def login_user(request):
             })
         else:
             login(request, user)
-            return redirect('perfil')
+            return redirect('welcome')
 
 def user_create(request):
     if request.method == 'POST':
