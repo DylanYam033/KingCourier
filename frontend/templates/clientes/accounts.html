@@ -1,0 +1,9 @@
+{% extends 'layouts/base.html' %} 
+
+{% block content %}
+    <h1>Usuarios Asociados</h1>
+    {% for cuenta in users %}
+        {{cuenta}}
+    {% endfor %}
+    {{id}}
+{% endblock content %}
