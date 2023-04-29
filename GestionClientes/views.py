@@ -100,6 +100,7 @@ def sucursal(request):
 
 
 def create_sucursal(request):
+    print
     if request.method == 'GET':
         return render(request, 'sucursales/create.html', {
             'createForm': SucursaleForm
