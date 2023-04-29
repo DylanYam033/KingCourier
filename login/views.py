@@ -12,9 +12,9 @@ def perfil(request):
     return render(request, 'login/perfil.html')
 
 
-def home(request):
+def login_user(request):
     if request.method == 'GET':
-        return render(request, 'login/home.html')
+        return render(request, 'login/login.html')
 
     else:
         user = authenticate(
@@ -22,7 +22,7 @@ def home(request):
         print(request.POST)
         print(user)
         if user is None:
-            return render(request, 'login/home.html', {
+            return render(request, 'login/login.html', {
                 'error': 'username or password is incorrect'
             })
         else:

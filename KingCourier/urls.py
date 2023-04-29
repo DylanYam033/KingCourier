@@ -8,6 +8,5 @@ urlpatterns = [
     path('', include("login.urls")),
     path('clientes/', include("GestionClientes.urls")),
     path('welcome/', TemplateView.as_view(template_name='welcome.html'), name='welcome'),
-    path('accounts/', include("django.contrib.auth.urls")),
     path('mensajeros/', include("GestionMensajeros.urls")),
 ]
