@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %} {% block content %}
 <h1>Crear Sucursal</h1>
 
-<form action="/sucursales/create/" method="POST">
+<form method="POST">
   {% csrf_token %} {{createForm}}
   <button>Guardar</button>
 </form>
