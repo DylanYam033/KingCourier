@@ -26,49 +26,54 @@
     id="navbarSupportedContent"
   >
     <ul class="navbar-nav ml-auto">
-
       {% if not user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'login' %}">Iniciar sesion</a>
       </li>
-      {% endif %}
-
+      {% endif %} 
+      
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'welcome' %}">Home</a>
       </li>
-      {% endif %}
-
+      {% endif %} 
+      
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'clientes' %}">Clientes</a>
       </li>
-      {% endif %}
-
+      {% endif %} 
+      
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="#">Mensajeros</a>
       </li>
-      {% endif %}
-
+      {% endif %} 
+      
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'sucursales' %}">Sucursales</a>
       </li>
-      {% endif %}
-
+      {% endif %} 
+      
+      {% if user.is_authenticated and not user.propietario_cliente and not user.propietario_mensajero %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'users' %}">Usuarios</a>
+      </li>
+      {% endif %} 
+      
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="#">Pedidos</a>
       </li>
-      {% endif %}
-
+      {% endif %} 
+      
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
       </li>
-      {% endif %}
-
+      {% endif %} 
+      
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="btn" href="{% url 'logout' %}">Cerrar Sesion</a>

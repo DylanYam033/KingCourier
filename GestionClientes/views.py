@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
 from .models import Cliente, Sucursale
 from .forms import CreateCliente, SucursaleForm
 from django.contrib.auth.decorators import login_required
@@ -7,7 +6,6 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 # listar clientes registrados
-
 
 @login_required
 def cliente(request):
