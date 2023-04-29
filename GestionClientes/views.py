@@ -1,14 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
 from .models import Cliente, Sucursale
 from .forms import CreateCliente, SucursaleForm
 from django.contrib.auth.decorators import login_required
+from user.models import User
 
 # Create your views here.
 
 # listar clientes registrados
-
-
 @login_required
 def cliente(request):
     cliente = Cliente.objects.filter(activo=True)
@@ -60,8 +58,6 @@ def detalle_cliente(request, cliente_id):
     })
 
 # editar cliente
-
-
 def editar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     if request.method == 'POST':
@@ -126,8 +122,6 @@ def detalle_sucursal(request, sucursal_id):
     })
 
 # editar cliente
-
-
 def editar_sucursal(request, sucursal_id):
     sucursal = get_object_or_404(Sucursale, pk=sucursal_id)
     if request.method == 'POST':
@@ -147,3 +141,26 @@ def eliminar_sucursal(request, sucursal_id):
     sucursal.activo = False
     sucursal.save()
     return redirect('sucursales')
+
+
+#listar cuentas de un cliente
+@login_required
+def accouns_clients(request):
+    # Obtener el propietario cliente del usuario en sesión
+    propietario_cliente_buscar = request.user.propietario_cliente
+    # Filtrar los usuarios cuyo propietario cliente sea igual al del usuario en sesión
+    users = []
+    if (propietario_cliente_buscar != None):
+        users = User.objects.filter(propietario_cliente=propietario_cliente_buscar)
+    if users:
+        # Si hay usuarios, los mostramos
+        return render(request, 'clientes/accounts.html', {
+            'users': users
+        })
+    else:
+        # Si no hay usuarios, mostramos un mensaje
+        message = "No hay usuarios aún"
+        return render(request, 'clientes/accounts.html', {
+            'message': message
+        })
+
