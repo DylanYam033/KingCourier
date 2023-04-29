@@ -9,12 +9,12 @@ from django.contrib.auth.decorators import login_required
 
 
 def perfil(request):
-    return render(request, 'perfil.html')
+    return render(request, 'login/perfil.html')
 
 
 def home(request):
     if request.method == 'GET':
-        return render(request, 'home.html')
+        return render(request, 'login/home.html')
 
     else:
         user = authenticate(
@@ -22,7 +22,7 @@ def home(request):
         print(request.POST)
         print(user)
         if user is None:
-            return render(request, 'home.html', {
+            return render(request, 'login/home.html', {
                 'error': 'username or password is incorrect'
             })
         else:
@@ -37,7 +37,7 @@ def user_create(request):
             return redirect('perfil')
     else:
         form = UserForm()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'login/register.html', {'form': form})
 
 
 @login_required
