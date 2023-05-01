@@ -105,6 +105,7 @@ from django.shortcuts import render, redirect
 from .forms import SucursaleForm
 
 def create_sucursal(request):
+    cliente = request.user.propietario_cliente
     if request.method == 'POST':
         form = SucursaleForm(request.POST, user=request.user)
         if form.is_valid():
@@ -115,7 +116,8 @@ def create_sucursal(request):
     else:
         form = SucursaleForm(user=request.user)
     return render(request, 'sucursales/create.html', {
-        'form': form}
+        'form': form,
+        'cliente': cliente}
         )
 
 

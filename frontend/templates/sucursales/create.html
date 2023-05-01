@@ -1,10 +1,33 @@
-{% extends 'layouts/base.html' %} {% block content %}
-<h1>Crear Sucursal</h1>
+{% extends 'layouts/base.html' %} 
+{% load static %}
 
-<form method="POST">
-  {% csrf_token %}
-  {{form}}
-  <button>Guardar</button>
-</form>
+{% block head %}
+  <link href="{% static 'styles/FormStyle.css' %}" rel="stylesheet" />
+{% endblock head %} 
+
+{% block content %}
+  <h1 class="titulo">Crear Sucursal</h1>
+  
+  <form method="POST">
+    
+    {% csrf_token %}
+
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" maxlength="200" required="" id="id_nombre" />
+
+    <label for="id_direccion">Direccion:</label>
+    <input type="text" name="direccion" maxlength="200" required="" id="id_direccion"/>
+
+    <label for="id_telefono">Telefono:</label>
+    <input type="text" name="telefono" maxlength="20" required="" id="id_telefono"/>
+
+    <label for="id_ciudad">Ciudad:</label>
+    <input type="text" name="ciudad" maxlength="100" required="" id="id_ciudad" />
+
+    <label for="id_cliente">Cliente:</label>
+    <input type="text" name="cliente" required="" id="id_cliente" value={{cliente}} readonly/>
+
+    <button>Guardar</button>
+  </form>
 
 {% endblock content %}
