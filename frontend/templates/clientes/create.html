@@ -8,10 +8,10 @@
 {% block content %}
 
   <h1 class="titulo">Crear Clientes</h1>
-
+  {{error}}
   <form action="/clientes/create/" method="POST">
     {% csrf_token %}
-
+    
     <label for="id_identificacion">Identificacion:</label>
     <input type="text" name="identificacion" maxlength="20" required="" id="id_identificacion"/>
 

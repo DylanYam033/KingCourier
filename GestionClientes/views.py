@@ -101,9 +101,6 @@ def sucursal(request):
         })
 
 
-from django.shortcuts import render, redirect
-from .forms import SucursaleForm
-
 def create_sucursal(request):
     cliente = request.user.propietario_cliente
     if request.method == 'POST':
