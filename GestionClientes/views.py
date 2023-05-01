@@ -53,8 +53,14 @@ def create_cliente(request):
 # detalles de un cliente
 def detalle_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
+    # Filtrar los usuarios cuyo propietario cliente sea igual al del detalle
+    users = User.objects.filter(propietario_cliente=cliente_id)
+    # Filtrar las sucursales cuyo cliente sea igual al del detalle
+    sucursales = Sucursale.objects.filter(cliente=cliente_id)
     return render(request, 'clientes/detail.html', {
-        'cliente': cliente
+        'cliente': cliente,
+        'users': users,
+        'sucursales': sucursales,
     })
 
 # editar cliente
@@ -83,7 +89,7 @@ def eliminar_cliente(request, cliente_id):
 
 # listar sucursales registradas
 def sucursal(request):
-    sucursal = Sucursale.objects.filter(activo=True)
+    sucursal = Sucursale.objects.filter(cliente=request.user.propietario_cliente)
     if sucursal.exists():
         return render(request, 'sucursales/index.html', {
             'sucursales': sucursal
