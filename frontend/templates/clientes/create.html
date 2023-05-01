@@ -1,5 +1,13 @@
-{% extends 'layouts/base.html' %} {% block content %}
-<h1>crear Clientes</h1>
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block head %}
+  <link href="{% static 'styles/FormStyle.css' %}" rel="stylesheet" />
+{% endblock head %}
+
+
+{% block content %}
+<h1 class="titulo">Crear Clientes</h1>
 
 <form action="/clientes/create/" method="POST">
   {% csrf_token %} {{createForm}}
