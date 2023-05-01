@@ -38,19 +38,19 @@
       </li>
       {% endif %} 
       
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated and not user.propietario_cliente and not user.propietario_mensajero %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'clientes' %}">Clientes</a>
       </li>
       {% endif %} 
       
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated and not user.propietario_cliente and not user.propietario_mensajero %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Mensajeros</a>
+        <a class="nav-link" href="{% url 'mensajeros' %}">Mensajeros</a>
       </li>
       {% endif %} 
       
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated and user.propietario_cliente %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'sucursales' %}">Sucursales</a>
       </li>
@@ -62,7 +62,7 @@
       </li>
       {% endif %} 
       
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated and user.propietario_cliente or user.propietario_mensajero %}
       <li class="nav-item">
         <a class="nav-link" href="#">Pedidos</a>
       </li>
