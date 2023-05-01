@@ -101,24 +101,23 @@ def sucursal(request):
         })
 
 
+from django.shortcuts import render, redirect
+from .forms import SucursaleForm
+
 def create_sucursal(request):
-    print
-    if request.method == 'GET':
-        return render(request, 'sucursales/create.html', {
-            'createForm': SucursaleForm
-        })
-    else:
-        try:
-            data = SucursaleForm(request.POST)
-            new_sucursal = data.save(commit=False)
-            new_sucursal.user = request.user
+    if request.method == 'POST':
+        form = SucursaleForm(request.POST, user=request.user)
+        if form.is_valid():
+            new_sucursal = form.save(commit=False)
+            new_sucursal.cliente = request.user.propietario_cliente
             new_sucursal.save()
             return redirect('sucursales')
-        except ValueError:
-            return render(request, 'sucursales/create.html', {
-                'createForm': SucursaleForm,
-                'error': 'Datos invalidos'
-            })
+    else:
+        form = SucursaleForm(user=request.user)
+    return render(request, 'sucursales/create.html', {
+        'form': form}
+        )
+
 
 
 def detalle_sucursal(request, sucursal_id):
