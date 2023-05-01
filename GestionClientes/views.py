@@ -30,6 +30,7 @@ def create_cliente(request):
         })
     else:
         data = CreateCliente(request.POST)
+        print(data)
         if data.is_valid():
             # Agrega una validación personalizada para la identificación
             identificacion = data.cleaned_data['identificacion']
@@ -106,19 +107,25 @@ from .forms import SucursaleForm
 
 def create_sucursal(request):
     cliente = request.user.propietario_cliente
-    if request.method == 'POST':
-        form = SucursaleForm(request.POST, user=request.user)
-        if form.is_valid():
-            new_sucursal = form.save(commit=False)
-            new_sucursal.cliente = request.user.propietario_cliente
+    if request.method == 'GET':
+        return render(request, 'sucursales/create.html', {
+            'createForm': SucursaleForm(),
+            'cliente': cliente
+        })
+    else:
+        data = SucursaleForm(request.POST)
+        print(data)
+        if data.is_valid():
+            new_sucursal = data.save(commit=False)
+            new_sucursal.cliente = cliente
             new_sucursal.save()
             return redirect('sucursales')
-    else:
-        form = SucursaleForm(user=request.user)
-    return render(request, 'sucursales/create.html', {
-        'form': form,
-        'cliente': cliente}
-        )
+        else:
+            return render(request, 'sucursales/create.html', {
+                'createForm': data,
+                'cliente': cliente,
+                'error': 'Datos inválidos',
+            })
 
 
 

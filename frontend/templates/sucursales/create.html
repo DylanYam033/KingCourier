@@ -8,8 +8,8 @@
 {% block content %}
   <h1 class="titulo">Crear Sucursal</h1>
   
-  <form method="POST">
-    
+  <form action="{% url 'create_sucursal' %}" method="POST">
+    <p>{{error}}</p>
     {% csrf_token %}
 
     <label for="id_nombre">Nombre:</label>
