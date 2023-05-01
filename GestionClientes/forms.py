@@ -9,13 +9,7 @@ class CreateCliente(ModelForm):
         fields = ['identificacion','nombre','direccion', 'ciudad', 'email', 'telefono']
 
 
-class SucursaleForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super(SucursaleForm, self).__init__(*args, **kwargs)
-        if user:
-            self.fields['cliente'].initial = user.propietario_cliente
-    
+class SucursaleForm(ModelForm):
     class Meta:
         model = Sucursale
-        fields = ['nombre', 'direccion', 'telefono', 'ciudad', 'cliente']
+        fields = ['nombre', 'direccion', 'telefono', 'ciudad']
