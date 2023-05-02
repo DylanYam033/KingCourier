@@ -1,5 +1,11 @@
 {% extends 'layouts/base.html' %}
 
+{% load static %}
+
+{% block head %}
+  <link href="{% static 'styles/FormStyle.css' %}" rel="stylesheet" />
+{% endblock head %} 
+
 {% block content %}
     <form action="{% url 'register' %}" method="POST">
         {% csrf_token %}
