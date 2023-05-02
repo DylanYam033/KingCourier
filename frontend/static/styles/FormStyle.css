@@ -31,7 +31,7 @@ input:focus {
 
 input[type="text"],
 input[type="email"],
-button {
+form button {
   padding: 5px 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -41,14 +41,14 @@ button {
   box-sizing: border-box;
 }
 
-button {
+form button {
   background-color: #d6af81;
   color: #fff;
   border: none;
   cursor: pointer;
 }
 
-button:hover {
+form button:hover {
   background-color: black;
 }
 
@@ -76,4 +76,10 @@ button:hover {
     background: #c9c9c9;
     opacity: 10px;
     border-radius: 10px;
+  }
+
+  @media (max-width: 600px) {
+    form {
+      width: 100%;
+    }
   }
