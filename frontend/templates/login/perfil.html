@@ -1,11 +1,6 @@
 {% extends 'layouts/base.html' %} 
 
 {% block content %}
-{% comment %} <h3>{{user.username}}</h3>
-<h3>{{user.email}}</h3>
-<h3>cliente: {{user.propietario_cliente}}</h3>
-<h3>mensajero: {{user.propietario_mensajero}}</h3> {% endcomment %}
-
 
     <div class="container py-10 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -17,9 +12,8 @@
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp"
                   class="rounded-circle img-fluid" style="width: 100px;" />
               </div>
-              <h4 class="mb-2">Julie L. Arsenault</h4>
-              <p class="text-muted mb-4">@Programmer <span class="mx-2">|</span> <a
-                  href="#!">mdbootstrap.com</a></p>
+              <h4 class="mb-2">{{user.username}}</h4>
+              <p class="text-muted mb-4">{{user.email}}</p>
               <div class="mb-4 pb-2">
                 <button type="button" class="btn btn-outline-dark btn-floating">
                   <i class="fab fa-facebook-f fa-lg"></i>
@@ -35,17 +29,13 @@
                 Message now
               </button>
               <div class="d-flex justify-content-between text-center mt-5 mb-2">
-                <div>
-                  <p class="mb-2 h5">8471</p>
-                  <p class="text-muted mb-0">Wallets Balance</p>
+                <div class="flex-fill">
+                  <p class="mb-2 h5">Telefono</p>
+                  <p class="text-muted mb-0">{{user.num_phone}}</p>
                 </div>
-                <div class="px-3">
-                  <p class="mb-2 h5">8512</p>
-                  <p class="text-muted mb-0">Income amounts</p>
-                </div>
-                <div>
-                  <p class="mb-2 h5">4751</p>
-                  <p class="text-muted mb-0">Total Transactions</p>
+                <div class="flex-fill">
+                  <p class="mb-2 h5">Ciudad</p>
+                  <p class="text-muted mb-0">{{user.city}}</p>
                 </div>
               </div>
             </div>
