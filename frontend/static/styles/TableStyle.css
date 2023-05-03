@@ -1,0 +1,11 @@
+h1{
+    font-weight:bold;
+}
+
+th{
+    font-weight: bolder;
+}
+
+.btn:hover{
+    background-color: black;
+}

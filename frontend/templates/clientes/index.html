@@ -1,4 +1,10 @@
 {% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>King Courier | Clientes</title>
+    <link href="{% static 'styles/TableStyle.css' %}" rel="stylesheet" />
+{% endblock head %}
 
 {% block content %}
 <h1 class="text-center">Clientes</h1>
