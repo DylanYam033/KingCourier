@@ -1,8 +1,51 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %} 
-    {% for user in users  %}
-        <p>{{user}}</p>
-    {% endfor %}
+
+  <h1 class="text-center">Usuarios</h1>
+  {% if message %}
+    <div class="alert alert-info" role="alert">
+      {{message}}
+    </div>
+  {% endif %}
+
+    <div class="ml-3">
+      <a class="btn btn-success" href="{% url 'register' %}" role="button">Crear Usuario</a>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Email</th>
+              <th>Telefono</th>
+              <th>Direccion</th>
+              <th>Ciudad</th>
+              <th>Propietario Cliente</th>
+              <th>Propietario Mensajero</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+            <tr>
+              <td>{{user.username}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.num_phone}}</td>
+              <td>{{user.address}}</td>
+              <td>{{user.city}}</td>
+              <td>{{user.propietario_cliente}}</td>
+              <td>{{user.propietario_mensajero}}</td>
+              {% comment %} <td> 
+                <a class="btn btn-info" href="{% url 'editar_cliente' cliente.id %}" role="button">Editar</a>             
+                <a class="btn btn-danger" href="{% url 'eliminar_cliente' cliente.id %}" role="button">Borrar</a>
+              </td> {% endcomment %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
    
 {% endblock content %}

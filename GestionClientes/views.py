@@ -82,7 +82,7 @@ def editar_cliente(request, cliente_id):
 
 
 def eliminar_cliente(request, cliente_id):
-    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    cliente = Cliente.objects.get(id=cliente_id)
     cliente.activo = False
     cliente.save()
     return redirect('clientes')
@@ -90,13 +90,13 @@ def eliminar_cliente(request, cliente_id):
 
 # listar sucursales registradas
 def sucursal(request):
-    sucursal = Sucursale.objects.filter(cliente=request.user.propietario_cliente)
+    sucursal = Sucursale.objects.filter(cliente=request.user.propietario_cliente, activo=True)
     if sucursal.exists():
         return render(request, 'sucursales/index.html', {
             'sucursales': sucursal
         })
     else:
-        message = "No hay clientes registrados"
+        message = "No hay sucursales registradas"
         return render(request, 'sucursales/index.html', {
             'message': message
         })
@@ -148,7 +148,7 @@ def editar_sucursal(request, sucursal_id):
 
 
 def eliminar_sucursal(request, sucursal_id):
-    sucursal = get_object_or_404(Sucursale, pk=sucursal_id)
+    sucursal = Sucursale.objects.get(id=sucursal_id)
     sucursal.activo = False
     sucursal.save()
     return redirect('sucursales')

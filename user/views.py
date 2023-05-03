@@ -18,7 +18,7 @@ def user_create(request):
 
 @login_required
 def users_list(request):
-    users = User.objects.all()
+    users = User.objects.exclude(is_superuser=True)
     if users.exists():
         return render(request, 'login/users.html', {
             'users': users

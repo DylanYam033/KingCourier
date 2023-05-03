@@ -1,19 +1,49 @@
-{% extends 'layouts/base.html' %} {% block content %}
-<h1>Sucursales</h1>
+{% extends 'layouts/base.html' %} 
 
-{% for sucursal in sucursales %}
-<ul>
-  <li>
-    <a href="{% url 'detalle_sucursal' sucursal.id %}">
-      <p>{{ sucursal.nombre }}</p>
-    </a>
+{% block content %}
+<h1 class="text-center">Sucursales</h1>
 
-    <a href="{% url 'editar_sucursal' sucursal.id %}">Editar</a>
+  {% if message %}
+    <div class="alert alert-info" role="alert">
+      {{message}}
+    </div>
+  {% endif %}
 
-    <form method="post" action="{% url 'eliminar_sucursal' sucursal.id %}">
-      {% csrf_token %}
-      <button type="submit">Eliminar</button>
-    </form>
-  </li>
-</ul>
-{% endfor %} {% endblock content %}
+
+    <div class="ml-3">
+      <a class="btn btn-success" href="{% url 'create_sucursal' %}" role="button">Crear Sucursal</a>
+    </div>
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Direccion</th>
+              <th>Ciudad</th>
+              <th>Telefono</th>
+              <th>Cliente</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for sucursal in sucursales %}
+            <tr>
+              <td><a href="{% url 'detalle_sucursal' sucursal.id %}">{{ sucursal.nombre }}</a></td>
+              <td>{{sucursal.direccion}}</td>
+              <td>{{sucursal.ciudad}}</td>
+              <td>{{sucursal.telefono}}</td>
+              <td>{{sucursal.cliente}}</td>
+              <td> 
+                <a class="btn btn-info" href="{% url 'editar_sucursal' sucursal.id %}" role="button">Editar</a>             
+                <a class="btn btn-danger" href="{% url 'eliminar_sucursal' sucursal.id %}" role="button">Borrar</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+{% endblock content %}
