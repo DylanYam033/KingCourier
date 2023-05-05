@@ -28,3 +28,15 @@ def users_list(request):
         return render(request, 'login/users.html', {
             'message': message
         })
+
+def edit_profile(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('perfil')
+    else:
+        form = UserForm(instance=request.user)
+    return render(request, 'login/edit_profile.html', {
+        'form': form
+        })

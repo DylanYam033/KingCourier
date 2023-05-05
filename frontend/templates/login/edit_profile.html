@@ -7,9 +7,10 @@
 {% endblock head %} 
 
 {% block content %}
-<h1 class="titulo">Editar Sucursal</h1>
+<h1 class="titulo">Editar Perfil </h1>
 <form method="post">
-  {% csrf_token %} {{ form.as_p }}
+  {% csrf_token %} 
+  {{ form.as_p }}
   <button type="submit">Guardar Cambios</button>
+  {% endblock content %}
 </form>
-{% endblock content %}
