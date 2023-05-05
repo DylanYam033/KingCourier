@@ -1,8 +1,23 @@
 {% extends 'layouts/base.html' %} 
 
+
+
+
+
+{% extends 'layouts/base.html' %} 
+{% load static %}
+
+{% block head %}
+    <title>King Courier | Sucursales</title>
+    <link href="{% static 'styles/TableStyle.css' %}" rel="stylesheet" />
+{% endblock head %}
+
+{% block header %}
+    {% include 'layouts/navbar.html' %}
+{% endblock header %}
+
 {% block content %}
 <h1 class="text-center">Sucursales</h1>
-
   {% if message %}
     <div class="alert alert-info" role="alert">
       {{message}}

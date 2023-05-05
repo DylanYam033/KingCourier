@@ -1,6 +1,13 @@
 {% extends 'layouts/base.html' %} {% block content %}
 <h1>Mensajeros</h1>
 
+{% load static %}
+
+{% block head %}
+    <title>King Courier | Mensajeros</title>
+    <link href="{% static 'styles/TableStyle.css' %}" rel="stylesheet" />
+{% endblock head %}
+
 {% for mensajero in mensajeros %}
 {% comment %} <ul>
   <li>

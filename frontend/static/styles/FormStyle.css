@@ -29,8 +29,15 @@ input:focus {
   box-shadow: 0 0 0.3rem 0.01rem #d6af81;
 }
 
+select:focus {
+  outline: 2px solid #d6af81;
+  box-shadow: 0 0 0.3rem 0.01rem #d6af81;
+}
+
 input[type="text"],
 input[type="email"],
+input[type="password"],
+select,
 form button {
   padding: 5px 10px;
   border: 1px solid #ccc;

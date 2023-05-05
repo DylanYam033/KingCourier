@@ -3,10 +3,12 @@
 {% load static %}
 
 {% block head %}
+  <title>King Courier | Registrar Usuario</title>
   <link href="{% static 'styles/FormStyle.css' %}" rel="stylesheet" />
 {% endblock head %} 
 
 {% block content %}
+<h1 class="titulo">Crear Usuarios</h1>
     <form action="{% url 'register' %}" method="POST">
         {% csrf_token %}
         {{form.as_p}}

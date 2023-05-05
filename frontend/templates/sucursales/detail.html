@@ -1,4 +1,16 @@
-{% extends 'layouts/base.html' %} {% block content %}
+{% extends 'layouts/base.html' %} 
+
+{% load static %}
+
+{% block head %}
+    <title>King Courier | Informacion de la sucursal</title>
+{% endblock head %}
+
+{% block header %}
+    {% include 'layouts/navbar.html' %}
+{% endblock header %}
+
+{% block content %}
 <h1>Detalles de la sucursal</h1>
 <p>Nombre: {{ sucursal.nombre }}</p>
 <p>Direccion: {{ sucursal.direccion }}</p>

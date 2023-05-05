@@ -9,3 +9,31 @@ th{
 .btn:hover{
     background-color: black;
 }
+
+
+
+
+/* ESTILOS PARA LA BARRA DE NAVEGACION */
+/* width */
+::-webkit-scrollbar {
+    width: 12px;
+    z-index: -1;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #d8d8d8;
+    opacity: 10px;
+    border-radius: 10px;
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c9c9c9;
+    opacity: 10px;
+    border-radius: 10px;
+  }

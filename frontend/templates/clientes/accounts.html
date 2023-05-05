@@ -1,5 +1,9 @@
 {% extends 'layouts/base.html' %} 
 
+{% block head %}
+    <title>King Courier | Cuentas del Clientes</title>
+{% endblock head %}
+
 {% block content %}
     <h1>Usuarios Asociados</h1>
     {% for cuenta in users %}
