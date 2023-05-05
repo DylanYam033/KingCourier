@@ -4,26 +4,35 @@
 
 {% block head %}
     <title>King Courier | Informacion del Clientes</title>
+    <link href="{% static 'styles/detailClientesStyle.css' %}" rel="stylesheet" />
 {% endblock head %}
 
 {% block content %}
-    <h1>Detalles del cliente</h1>
-    <p>NIT: {{ cliente.identificacion }}</p>
-    <p>Razon Social: {{ cliente.nombre }}</p>
-    <p>Direccion: {{ cliente.direccion }}</p>
-    <p>Ciudad: {{ cliente.ciudad }}</p>
-    <p>Email: {{ cliente.email }}</p>
-    <p>Telefono: {{ cliente.direccion }}</p>
-    <p>Ciudad: {{ cliente.ciudad }}</p>
-
-    <h2>Usuarios Asociados</h2>
-    {% for cuenta in users %}
+<div class="contenedor">
+    <div class="tarjeta">
+      <h2>Detalles del cliente</h2>
+      <p>NIT: {{ cliente.identificacion }}</p>
+      <p>Razon Social: {{ cliente.nombre }}</p>
+      <p>Direccion: {{ cliente.direccion }}</p>
+      <p>Ciudad: {{ cliente.ciudad }}</p>
+      <p>Email: {{ cliente.email }}</p>
+      <p>Telefono: {{ cliente.telefono }}</p>
+      <p>Ciudad: {{ cliente.ciudad }}</p>
+    </div>
+  
+    <div class="tarjeta">
+      <h2>Usuarios Asociados</h2>
+      {% for cuenta in users %}
         <p>{{cuenta}}</p>
-    {% endfor %}
-
-    <h2>Sucursales</h2>
-    {% for sucursal in sucursales %}
+      {% endfor %}
+    </div>
+  
+    <div class="tarjeta">
+      <h2>Sucursales</h2>
+      {% for sucursal in sucursales %}
         <p>{{sucursal}}</p>
-    {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
 
 {% endblock content %}

@@ -11,7 +11,7 @@ def user_create(request):
         form = UserForm(request.POST)
         if form.is_valid():
             user = form.save()
-            return redirect('perfil')
+            return redirect('users')
     else:
         form = UserForm()
     return render(request, 'login/register.html', {'form': form})
@@ -34,7 +34,7 @@ def edit_profile(request):
         form = UserForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('perfil')
+            return redirect('users')
     else:
         form = UserForm(instance=request.user)
     return render(request, 'login/edit_profile.html', {

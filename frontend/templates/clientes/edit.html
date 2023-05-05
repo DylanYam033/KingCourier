@@ -8,9 +8,28 @@
 {% endblock head %} 
 
 {% block content %}
-<h1 class="titulo">Editar cliente</h1>
-<form method="post">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Guardar Cambios</button>
-  {% endblock content %}
-</form>
+  <h1 class="titulo">Editar cliente</h1>
+  <form method="post">
+    {% csrf_token %}
+
+    <label for="id_identificacion">Identificacion:</label>
+    <input type="text" name="identificacion" maxlength="20" required="" id="id_identificacion" value="{{cliente.id}}" readonly/>
+
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" maxlength="200" required="" id="id_nombre" value="{{cliente}}"/>
+
+    <label for="id_direccion">Direccion:</label>
+    <input type="text" name="direccion" maxlength="200" required="" id="id_direccion" value="{{cliente.direccion}}"/>
+
+    <label for="id_ciudad">Ciudad:</label>
+    <input type="text" name="ciudad" maxlength="100" required="" id="id_ciudad" value="{{cliente.ciudad}}"/>
+
+    <label for="id_email">Email:</label>
+    <input type="email" name="email" maxlength="254" required="" id="id_email" value="{{cliente.email}}"/>
+
+    <label for="id_telefono">Telefono:</label>
+    <input type="text" name="telefono" maxlength="20" required="" id="id_telefono" value="{{cliente.telefono}}"/>
+
+    <button>Guardar</button>
+  </form>
+{% endblock content %}
