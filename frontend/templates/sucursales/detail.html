@@ -4,6 +4,7 @@
 
 {% block head %}
     <title>King Courier | Informacion de la sucursal</title>
+    <link href="{% static 'styles/detailClientesStyle.css' %}" rel="stylesheet" />
 {% endblock head %}
 
 {% block header %}
@@ -11,10 +12,16 @@
 {% endblock header %}
 
 {% block content %}
-<h1>Detalles de la sucursal</h1>
-<p>Nombre: {{ sucursal.nombre }}</p>
-<p>Direccion: {{ sucursal.direccion }}</p>
-<p>Ciudad: {{ sucursal.ciudad }}</p>
-<p>Telefono: {{ sucursal.telefono }}</p>
-<p>Cliente: {{ sucursal.cliente }}</p>
+
+<div class="contenedor">
+    <div class="tarjeta">
+        <h1>Detalles de la sucursal</h1>
+        <p>Nombre: {{ sucursal.nombre }}</p>
+        <p>Direccion: {{ sucursal.direccion }}</p>
+        <p>Ciudad: {{ sucursal.ciudad }}</p>
+        <p>Telefono: {{ sucursal.telefono }}</p>
+        <p>Cliente: {{ sucursal.cliente }}</p>
+    </div>
+</div>
+
 {% endblock content %}

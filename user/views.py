@@ -10,7 +10,7 @@ def user_create(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            usuario = form.save()
             return redirect('users')
     else:
         form = UserForm()
@@ -18,7 +18,7 @@ def user_create(request):
 
 @login_required
 def users_list(request):
-    users = User.objects.exclude(is_superuser=True)
+    users = User.objects.exclude(is_superuser=True).filter(is_active=True)
     if users.exists():
         return render(request, 'login/users.html', {
             'users': users
@@ -31,12 +31,18 @@ def users_list(request):
 
 def edit_profile(request):
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=request.user)
+        form = UserForm(request.POST, instance=request.usuario)
         if form.is_valid():
             form.save()
             return redirect('users')
     else:
-        form = UserForm(instance=request.user)
+        form = UserForm(instance=request.usuario)
     return render(request, 'login/edit_profile.html', {
         'form': form
         })
+
+def eliminar_usuario(request, user_id):
+    usuario = User.objects.get(id=user_id)
+    usuario.is_active = False
+    usuario.save()
+    return redirect('users')

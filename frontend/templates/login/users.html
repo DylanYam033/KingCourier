@@ -32,6 +32,7 @@
               <th>Ciudad</th>
               <th>Propietario Cliente</th>
               <th>Propietario Mensajero</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -44,10 +45,9 @@
               <td>{{user.city}}</td>
               <td>{{user.propietario_cliente}}</td>
               <td>{{user.propietario_mensajero}}</td>
-              {% comment %} <td> 
-                <a class="btn btn-info" href="{% url 'editar_cliente' cliente.id %}" role="button">Editar</a>             
-                <a class="btn btn-danger" href="{% url 'eliminar_cliente' cliente.id %}" role="button">Borrar</a>
-              </td> {% endcomment %}
+              <td>
+                <a class="btn btn-danger" href="{% url 'eliminar_usuario' user.id %}" role="button">Borrar</a>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
