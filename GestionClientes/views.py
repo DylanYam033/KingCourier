@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Cliente, Sucursale
 from .forms import CreateCliente, SucursaleForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from user.models import User
 
 # Create your views here.
 
 # listar clientes registrados
 @login_required
+@user_passes_test(lambda user: user.is_superuser)
 def cliente(request):
     cliente = Cliente.objects.filter(activo=True)
     if cliente.exists():
@@ -22,7 +23,8 @@ def cliente(request):
 
 # crear clientes
 
-
+@user_passes_test(lambda user: user.is_superuser)
+@login_required
 def create_cliente(request):
     if request.method == 'GET':
         return render(request, 'clientes/create.html', {
@@ -52,6 +54,8 @@ def create_cliente(request):
 
 
 # detalles de un cliente
+@user_passes_test(lambda user: user.is_superuser)
+@login_required
 def detalle_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     # Filtrar los usuarios cuyo propietario cliente sea igual al del detalle
@@ -65,6 +69,8 @@ def detalle_cliente(request, cliente_id):
     })
 
 # editar cliente
+@user_passes_test(lambda user: user.is_superuser)
+@login_required
 def editar_cliente(request, cliente_id):
     cliente = get_object_or_404(Cliente, pk=cliente_id)
     if request.method == 'POST':
@@ -80,7 +86,8 @@ def editar_cliente(request, cliente_id):
 
 # eliminar cliente
 
-
+@user_passes_test(lambda user: user.is_superuser)
+@login_required
 def eliminar_cliente(request, cliente_id):
     cliente = Cliente.objects.get(id=cliente_id)
     cliente.activo = False
@@ -89,6 +96,7 @@ def eliminar_cliente(request, cliente_id):
 
 
 # listar sucursales registradas
+@login_required
 def sucursal(request):
     sucursal = Sucursale.objects.filter(cliente=request.user.propietario_cliente, activo=True)
     if sucursal.exists():
@@ -101,7 +109,7 @@ def sucursal(request):
             'message': message
         })
 
-
+@login_required
 def create_sucursal(request):
     cliente = request.user.propietario_cliente
     if request.method == 'GET':
@@ -125,7 +133,7 @@ def create_sucursal(request):
             })
 
 
-
+@login_required
 def detalle_sucursal(request, sucursal_id):
     sucursal = get_object_or_404(Sucursale, pk=sucursal_id)
     return render(request, 'sucursales/detail.html', {
@@ -146,7 +154,7 @@ def editar_sucursal(request, sucursal_id):
         'form': form, 'sucursal': sucursal
     })
 
-
+@login_required
 def eliminar_sucursal(request, sucursal_id):
     sucursal = Sucursale.objects.get(id=sucursal_id)
     sucursal.activo = False

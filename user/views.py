@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from .forms import UserForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import User
 
 
 # Create your views here.
+
+@user_passes_test(lambda user: user.is_superuser)
 @login_required
 def user_create(request):
     if request.method == 'POST':
@@ -16,6 +18,7 @@ def user_create(request):
         form = UserForm()
     return render(request, 'login/register.html', {'form': form})
 
+@user_passes_test(lambda user: user.is_superuser)
 @login_required
 def users_list(request):
     users = User.objects.exclude(is_superuser=True).filter(is_active=True)
@@ -41,6 +44,7 @@ def edit_profile(request):
         'form': form
         })
 
+@user_passes_test(lambda user: user.is_superuser)
 def eliminar_usuario(request, user_id):
     usuario = User.objects.get(id=user_id)
     usuario.is_active = False
