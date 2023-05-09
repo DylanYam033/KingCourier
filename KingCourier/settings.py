@@ -154,3 +154,6 @@ AUTH_USER_MODEL = 'user.User'
 
 #URL login
 LOGIN_URL = '/'
+
+#deslogueo por inactividad
+SESSION_COOKIE_AGE = 3600
