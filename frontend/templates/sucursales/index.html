@@ -5,6 +5,8 @@
 {% block head %}
     <title>King Courier | Sucursales</title>
     <link href="{% static 'styles/TableStyle.css' %}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'scripts/SearchTable.js' %}"></script>
 {% endblock head %}
 
 {% block header %}
@@ -20,8 +22,13 @@
   {% endif %}
 
 
-    <div class="ml-3">
-      <a class="btn btn-success" href="{% url 'create_sucursal' %}" role="button">Crear Sucursal</a>
+    <div class="search-container d-flex justify-content-between align-items-center mb-3">
+      <div class="mr-4 ml-4 btnCreate">
+        <a class="btn btn-success w-150" href="{% url 'create_sucursal' %}" role="button">Crear Sucursal</a>
+      </div>
+      <div class="mr-4 search">
+        <input type="text" class="form-control w-300" id="search-input" placeholder="Buscar...">
+      </div>
     </div>
 
     <div class="card-body">

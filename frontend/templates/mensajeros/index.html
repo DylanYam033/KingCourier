@@ -1,28 +1,69 @@
-{% extends 'layouts/base.html' %} {% block content %}
-<h1>Mensajeros</h1>
-
+{% extends 'layouts/base.html' %} 
 {% load static %}
 
 {% block head %}
     <title>King Courier | Mensajeros</title>
     <link href="{% static 'styles/TableStyle.css' %}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'scripts/SearchTable.js' %}"></script>
 {% endblock head %}
 
-{% for mensajero in mensajeros %}
-{% comment %} <ul>
-  <li>
-    <a href="{% url 'detalle_mensajero' mensajero.id %}">
-      
-    </a>
+{% block header %}
+    {% include 'layouts/navbar.html' %}
+{% endblock header %}
 
-    <a href="{% url 'editar_mensajero' mensajero.id %}">Editar</a>
+{% block content %}
+  <h1 class="text-center">Mensajeros</h1>
+    {% if message %}
+      <div class="alert alert-info" role="alert">
+        {{message}}
+      </div>
+    {% endif %}
+    
+      <div class="search-container d-flex justify-content-between align-items-center mb-3">
+        <div class="mr-4 ml-4 btnCreate">
+          <a class="btn btn-success w-150" href="#" role="button">Crear Mensajero</a>
+        </div>
+        <div class="mr-4 search">
+          <input type="text" class="form-control w-300" id="search-input" placeholder="Buscar...">
+        </div>
+      </div>
 
-    <form method="post" action="{% url 'eliminar_mensajero' mensajero.id %}">
-      {% csrf_token %}
-      <button type="submit">Eliminar</button>
-    </form>
-  </li>
-</ul> {% endcomment %}
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <caption>Listado de Mensajeros</caption>
+            <thead>
+              <tr>
+                <th>Identificacion</th>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Ciudad</th>
+                <th>Email</th>
+                <th>Telefono</th>
+                <th>Vehiculo</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for mensajero in mensajeros %}
+                <tr>
+                  <td>{{mensajero.identificacion}}</td>
+                  <td><a href="#">{{ mensajero.nombre }}</a></td>
+                  <td>{{mensajero.direccion}}</td>
+                  <td>{{mensajero.ciudad}}</td>
+                  <td>{{mensajero.email}}</td>
+                  <td>{{mensajero.telefono}}</td>
+                  <td>{{mensajero.vehiculo}}</td>
+                  <td> 
+                    <a class="btn btn-info" href="#" role="button">Editar</a>             
+                    <a class="btn btn-danger" href="#" role="button">Borrar</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-<p>{{ mensajero.nombre }}</p>
-{% endfor %} {% endblock content %}
+{% endblock content %}

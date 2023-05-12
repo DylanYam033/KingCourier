@@ -10,6 +10,31 @@ th{
     background-color: black;
 }
 
+.btnCreate{
+  width: 150px;
+  padding-left: 30px;
+}
+
+.search{
+  width: 500px;
+  padding-right: 30px;
+}
+
+.form-control:focus {
+  outline: 1px solid #d6af81;
+  box-shadow: 0 0 0.3rem 0.1rem #d6af81;
+  border-color: #d6af81;
+}
+
+@media screen and (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+  }
+  .search{
+    padding-left: 120px;
+  }
+}
+
 
 
 
