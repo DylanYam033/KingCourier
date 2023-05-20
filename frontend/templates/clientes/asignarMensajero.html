@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html' %} 
+
+{% load static %}
+
+{% block head %}
+  <title>King Courier | Asignar Mensajeros</title>
+  <link href="{% static 'styles/FormStyle.css' %}" rel="stylesheet" />
+{% endblock head %} 
+
+{% block content %}
+  <h1 class="titulo">Asignar Mensajero</h1>
+  {{error}}
+  <form method="post">
+    {% csrf_token %}
+
+    {{form}}
+
+    <button>Guardar</button>
+  </form>
+{% endblock content %}

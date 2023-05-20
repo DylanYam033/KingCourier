@@ -5,3 +5,4 @@ from .models import *
 
 admin.site.register(Sucursale)
 admin.site.register(Cliente)
+admin.site.register(DetalleClienteMensajeros)

@@ -11,7 +11,6 @@ class Cliente(models.Model):
     email = models.EmailField()
     telefono = models.CharField(max_length=20)
     activo = models.BooleanField(default=True)
-    mensajeros = models.ManyToManyField(Mensajeros)
 
     def __str__(self):
         return self.nombre
@@ -28,3 +27,9 @@ class Sucursale(models.Model):
     def __str__(self):
         return self.nombre
 
+class DetalleClienteMensajeros(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    mensajero = models.ForeignKey(Mensajeros, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.cliente.nombre + " - " + self.mensajero.nombre
