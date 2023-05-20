@@ -6,7 +6,7 @@ from .models import Cliente, Sucursale
 class CreateCliente(ModelForm):
     class Meta:
         model = Cliente
-        fields = ['identificacion','nombre','direccion', 'ciudad', 'email', 'telefono']
+        fields = ['identificacion','nombre','direccion', 'ciudad', 'email', 'telefono', 'mensajeros']
 
 
 class SucursaleForm(ModelForm):
