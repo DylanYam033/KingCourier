@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block head %}
+    <title>King Courier | Clientes Asociados</title>
+    <link href="{% static 'styles/detailClientesStyle.css' %}" rel="stylesheet" />
+{% endblock head %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="tarjeta">
+      <h2>Clientes Asociados</h2>
+      {% for cliente in clientes %}
+      <p>{{cliente.nombre}}</p>
+      {% endfor %}
+    </div>
+  
+  </div>
+
+{% endblock content %}

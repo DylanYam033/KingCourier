@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Mensajeros
 from .forms import MensajeroForm
-from GestionClientes.models import DetalleClienteMensajeros
+from GestionClientes.models import DetalleClienteMensajeros, Cliente
 
 
 # Create your views here.
@@ -56,6 +56,27 @@ def detalle_mensajero(request, mensajero_id):
         'detalle_clientes': detalle_clientes
         }
     )
+
+def clientes_mensajero(request):
+    try:
+        mensajero = request.user.propietario_mensajero
+        clientes = Cliente.objects.filter(detalleclientemensajeros__mensajero=mensajero)
+        
+        if clientes.exists():
+            return render(request, 'mensajeros/clientes.html', {
+                'clientes': clientes
+            })
+        else:
+            message = "No tiene clientes asociados"
+            return render(request, 'sucursales/index.html', {
+                'message': message
+            })
+    except Mensajeros.DoesNotExist:
+        message = "No es un mensajero válido"
+        return render(request, 'sucursales/index.html', {
+            'message': message
+        })
+
     
 def editar_mensajero(request, mensajero_id):
     mensajero = get_object_or_404(Mensajeros, pk=mensajero_id)
