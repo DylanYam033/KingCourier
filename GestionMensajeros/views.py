@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Mensajeros
 from .forms import MensajeroForm
+from GestionClientes.models import DetalleClienteMensajeros
 
 
 # Create your views here.
@@ -47,9 +48,12 @@ def create_mensajero(request):
             })
         
 def detalle_mensajero(request, mensajero_id):
+    # Filtra los clientes cuyo mensajero es igual al del detalle
+    detalle_clientes = DetalleClienteMensajeros.objects.filter(mensajero=mensajero_id)
     mensajero = get_object_or_404(Mensajeros, pk=mensajero_id)
     return render(request, 'mensajeros/detail.html', {
-        'mensajero': mensajero
+        'mensajero': mensajero,
+        'detalle_clientes': detalle_clientes
         }
     )
     

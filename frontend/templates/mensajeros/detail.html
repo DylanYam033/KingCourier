@@ -23,6 +23,9 @@
   
     <div class="tarjeta">
       <h2>Clientes Asociados</h2>
+      {% for detalle_cliente in detalle_clientes %}
+        <p>{{detalle_cliente.cliente}}</p>
+      {% endfor %}
     </div>
   
   </div>
