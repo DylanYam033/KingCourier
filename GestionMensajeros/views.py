@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Mensajeros
+from .forms import MensajeroForm
 
 # Create your views here.
 
 # listar mensajeros registrados
-
 
 def mensajero(request):
     mensajero = Mensajeros.objects.filter(activo=True)
@@ -17,3 +17,57 @@ def mensajero(request):
         return render(request, 'mensajeros/index.html', {
             'message': message
         })
+
+def create_mensajero(request):
+    if request.method == 'GET':
+        return render(request, 'mensajeros/create.html', {
+            'createForm': MensajeroForm()
+        })
+    else:
+        data = MensajeroForm(request.POST)
+        print(data)
+        if data.is_valid():
+            # Agrega una validación personalizada para la identificación
+            identificacion = data.cleaned_data['identificacion']
+            if Mensajeros.objects.filter(identificacion=identificacion).exists():
+                return render(request, 'mensajeros/create.html', {
+                    'createForm': data,
+                    'error': 'La identificación ya existe'
+                })
+
+            new_cliente = data.save(commit=False)
+            new_cliente.user = request.user
+            new_cliente.save()
+            return redirect('mensajeros')
+        else:
+            return render(request, 'mensajeros/create.html', {
+                'createForm': data,
+                'error': 'Datos inválidos'
+            })
+        
+def detalle_mensajero(request, mensajero_id):
+    mensajero = get_object_or_404(Mensajeros, pk=mensajero_id)
+    return render(request, 'mensajeros/detail.html', {
+        'mensajero': mensajero
+        }
+    )
+    
+def editar_mensajero(request, mensajero_id):
+    mensajero = get_object_or_404(Mensajeros, pk=mensajero_id)
+    if request.method == 'POST':
+        form = MensajeroForm(request.POST, instance=mensajero)
+        if form.is_valid():
+            form.save()
+            return redirect('detalle_mensajero', mensajero_id=mensajero.id)
+    else:
+        form = MensajeroForm(instance=mensajero)
+    return render(request, 'mensajeros/edit.html', {
+        'form': form, 'mensajero': mensajero
+    })
+
+
+def eliminar_mensajero(request, mensajero_id):
+    mensajero = Mensajeros.objects.get(id=mensajero_id)
+    mensajero.activo = False
+    mensajero.save()
+    return redirect('mensajeros')

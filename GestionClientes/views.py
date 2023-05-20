@@ -27,28 +27,27 @@ def cliente(request):
 @login_required
 def create_cliente(request):
     if request.method == 'GET':
-        return render(request, 'clientes/create.html', {
-            'createForm': CreateCliente()
-        })
+        form = CreateCliente()
+        return render(request, 'clientes/create.html', {'createForm': form})
     else:
-        data = CreateCliente(request.POST)
-        print(data)
-        if data.is_valid():
-            # Agrega una validación personalizada para la identificación
-            identificacion = data.cleaned_data['identificacion']
+        form = CreateCliente(request.POST)
+        if form.is_valid():
+            identificacion = form.cleaned_data['identificacion']
             if Cliente.objects.filter(identificacion=identificacion).exists():
                 return render(request, 'clientes/create.html', {
-                    'createForm': data,
+                    'createForm': form,
                     'error': 'La identificación ya existe'
                 })
 
-            new_cliente = data.save(commit=False)
+            selected_mensajeros = request.POST.getlist('mensajeros')
+            new_cliente = form.save(commit=False)
             new_cliente.user = request.user
             new_cliente.save()
+            new_cliente.mensajeros.set(selected_mensajeros)
             return redirect('clientes')
         else:
             return render(request, 'clientes/create.html', {
-                'createForm': data,
+                'createForm': form,
                 'error': 'Datos inválidos'
             })
 

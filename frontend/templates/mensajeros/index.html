@@ -22,7 +22,7 @@
     
       <div class="search-container d-flex justify-content-between align-items-center mb-3">
         <div class="mr-4 ml-4 btnCreate">
-          <a class="btn btn-success w-150" href="#" role="button">Crear Mensajero</a>
+          <a class="btn btn-success w-150" href="{% url 'create_mensajeros' %}" role="button">Crear Mensajero</a>
         </div>
         <div class="mr-4 search">
           <input type="text" class="form-control w-300" id="search-input" placeholder="Buscar...">
@@ -48,15 +48,15 @@
               {% for mensajero in mensajeros %}
                 <tr>
                   <td>{{mensajero.identificacion}}</td>
-                  <td><a href="#">{{ mensajero.nombre }}</a></td>
+                  <td><a href="{% url 'detalle_mensajero' mensajero.id %}">{{ mensajero.nombre }}</a></td>
                   <td>{{mensajero.direccion}}</td>
                   <td>{{mensajero.ciudad}}</td>
                   <td>{{mensajero.email}}</td>
                   <td>{{mensajero.telefono}}</td>
                   <td>{{mensajero.vehiculo}}</td>
                   <td> 
-                    <a class="btn btn-info" href="#" role="button">Editar</a>             
-                    <a class="btn btn-danger" href="#" role="button">Borrar</a>
+                    <a class="btn btn-info" href="{% url 'editar_mensajero' mensajero.id %}" role="button">Editar</a>             
+                    <a class="btn btn-danger" href="{% url 'eliminar_mensajero' mensajero.id %}" role="button">Borrar</a>
                   </td>
                 </tr>
               {% endfor %}

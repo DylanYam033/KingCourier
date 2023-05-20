@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html' %} 
+{% load static %} 
+
+{% block head %}
+  <title>King Courier | Crear Mensajero</title>
+  <link href="{% static 'styles/FormStyle.css' %}" rel="stylesheet" />
+{% endblock head %} 
+
+{% block content %}
+
+  <h1 class="titulo">Crear Mensajero</h1>
+  {{error}}
+  <form action="{% url 'create_mensajeros' %}" method="POST">
+    {% csrf_token %}
+    {{createForm}}
+    {% comment %} <label for="id_identificacion">Identificacion:</label>
+    <input type="text" name="identificacion" maxlength="20" required="" id="id_identificacion"/>
+
+    <label for="id_nombre">Nombre:</label>
+    <input type="text" name="nombre" maxlength="200" required="" id="id_nombre" />
+
+    <label for="id_direccion">Direccion:</label>
+    <input type="text" name="direccion" maxlength="200" required="" id="id_direccion"/>
+
+    <label for="id_ciudad">Ciudad:</label>
+    <input type="text" name="ciudad" maxlength="100" required="" id="id_ciudad" />
+
+    <label for="id_email">Email:</label>
+    <input type="email" name="email" maxlength="254" required="" id="id_email" />
+
+    <label for="id_telefono">Telefono:</label>
+    <input type="text" name="telefono" maxlength="20" required="" id="id_telefono"/>
+    {% endcomment %}
+    
+    <button>Guardar</button> 
+  </form>
+
+{% endblock content %}

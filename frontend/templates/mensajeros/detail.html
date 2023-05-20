@@ -1,0 +1,30 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block head %}
+    <title>King Courier | Informacion del Mensajero</title>
+    <link href="{% static 'styles/detailClientesStyle.css' %}" rel="stylesheet" />
+{% endblock head %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="tarjeta">
+      <h2>Detalles del mensajero</h2>
+      <p>Identificacion: {{ mensajero.identificacion }}</p>
+      <p>Nombre: {{ mensajero.nombre }}</p>
+      <p>Direccion: {{ mensajero.direccion }}</p>
+      <p>Ciudad: {{ mensajero.ciudad }}</p>
+      <p>Email: {{ mensajero.email }}</p>
+      <p>Telefono: {{ mensajero.telefono }}</p>
+      <p>Ciudad: {{ mensajero.ciudad }}</p>
+      <p>Vehiculo: {{ mensajero.vehiculo }}</p>
+    </div>
+  
+    <div class="tarjeta">
+      <h2>Clientes Asociados</h2>
+    </div>
+  
+  </div>
+
+{% endblock content %}
