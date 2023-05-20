@@ -37,19 +37,17 @@ def create_cliente(request):
             identificacion = data.cleaned_data['identificacion']
             if Cliente.objects.filter(identificacion=identificacion).exists():
                 return render(request, 'clientes/create.html', {
-                    'createForm': form,
+                    'createForm': data,
                     'error': 'La identificación ya existe'
                 })
 
-            selected_mensajeros = request.POST.getlist('mensajeros')
-            new_cliente = form.save(commit=False)
+            new_cliente = data.save(commit=False)
             new_cliente.user = request.user
             new_cliente.save()
-            new_cliente.mensajeros.set(selected_mensajeros)
             return redirect('clientes')
         else:
             return render(request, 'clientes/create.html', {
-                'createForm': form,
+                'createForm': data,
                 'error': 'Datos inválidos'
             })
 
