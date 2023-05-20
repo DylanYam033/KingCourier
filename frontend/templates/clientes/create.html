@@ -12,8 +12,8 @@
   {{error}}
   <form action="/clientes/create/" method="POST">
     {% csrf_token %}
-    
-    <label for="id_identificacion">Identificacion:</label>
+    {{createForm}}
+    {% comment %} <label for="id_identificacion">Identificacion:</label>
     <input type="text" name="identificacion" maxlength="20" required="" id="id_identificacion"/>
 
     <label for="id_nombre">Nombre:</label>
@@ -30,8 +30,9 @@
 
     <label for="id_telefono">Telefono:</label>
     <input type="text" name="telefono" maxlength="20" required="" id="id_telefono"/>
-
-    <button>Guardar</button>
+    {% endcomment %}
+    
+    <button>Guardar</button> 
   </form>
 
 {% endblock content %}

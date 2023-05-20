@@ -1,5 +1,5 @@
 from django.db import models
-
+from GestionMensajeros.models import Mensajeros
 # Create your models here.
 
 
@@ -11,6 +11,7 @@ class Cliente(models.Model):
     email = models.EmailField()
     telefono = models.CharField(max_length=20)
     activo = models.BooleanField(default=True)
+    mensajeros = models.ManyToManyField(Mensajeros)
 
     def __str__(self):
         return self.nombre
@@ -26,3 +27,4 @@ class Sucursale(models.Model):
 
     def __str__(self):
         return self.nombre
+
