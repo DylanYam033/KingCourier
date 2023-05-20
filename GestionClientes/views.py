@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Cliente, Sucursale
-from .forms import CreateCliente, SucursaleForm
+from .models import Cliente, Sucursale, DetalleClienteMensajeros
+from .forms import CreateCliente, SucursaleForm, DetalleClienteMensajeroForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from user.models import User
 
@@ -27,12 +27,14 @@ def cliente(request):
 @login_required
 def create_cliente(request):
     if request.method == 'GET':
-        form = CreateCliente()
-        return render(request, 'clientes/create.html', {'createForm': form})
+        return render(request, 'clientes/create.html', {
+            'createForm': CreateCliente(),
+        })
     else:
-        form = CreateCliente(request.POST)
-        if form.is_valid():
-            identificacion = form.cleaned_data['identificacion']
+        data = CreateCliente(request.POST)
+        if data.is_valid():
+            # Agrega una validación personalizada para la identificación
+            identificacion = data.cleaned_data['identificacion']
             if Cliente.objects.filter(identificacion=identificacion).exists():
                 return render(request, 'clientes/create.html', {
                     'createForm': form,
@@ -61,10 +63,13 @@ def detalle_cliente(request, cliente_id):
     users = User.objects.filter(propietario_cliente=cliente_id)
     # Filtrar las sucursales cuyo cliente sea igual al del detalle
     sucursales = Sucursale.objects.filter(cliente=cliente_id)
+    # Filtra los mensajeros cuyo cliente es igual al del detalle
+    detalle_mensajeros = DetalleClienteMensajeros.objects.filter(cliente=cliente_id)
     return render(request, 'clientes/detail.html', {
         'cliente': cliente,
         'users': users,
         'sucursales': sucursales,
+        'detalleMensajeros': detalle_mensajeros,
     })
 
 # editar cliente
@@ -82,6 +87,42 @@ def editar_cliente(request, cliente_id):
     return render(request, 'clientes/edit.html', {
         'form': form, 'cliente': cliente
     })
+
+# asignar Mensajeros a un cliente
+@user_passes_test(lambda user: user.is_superuser)
+@login_required
+def asignar_mensajeros(request, cliente_id):
+    cliente = get_object_or_404(Cliente, pk=cliente_id)
+    if request.method == 'GET':
+        form = DetalleClienteMensajeroForm()
+        return render(request, 'clientes/asignarMensajero.html', {
+            'form': form,
+            'cliente': cliente
+        })
+    else:
+        data = DetalleClienteMensajeroForm(request.POST)
+        if data.is_valid():
+
+            # Agrega una validación personalizada para la identificación
+            mensajero = data.cleaned_data['mensajero']
+            info = DetalleClienteMensajeros.objects.filter(cliente=cliente_id)
+            existe = info.filter(mensajero=mensajero).exists()
+            print(info.filter(mensajero=mensajero))
+            print(existe)
+            if existe:
+                return render(request, 'clientes/asignarMensajero.html', {
+                    'form': data,
+                    'error': 'Ese mensajero ya esta asignado'
+                })
+            new_detalle = data.save(commit=False)
+            new_detalle.cliente = cliente
+            new_detalle.save()
+            return redirect('detalle_cliente', cliente_id)
+        else:
+            return render(request, 'clientes/asignarMensajero.html', {
+                'form': data,
+                'error': 'Datos inválidos'
+            }) 
 
 # eliminar cliente
 

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Mensajeros
 from .forms import MensajeroForm
 
+
 # Create your views here.
 
 # listar mensajeros registrados

@@ -33,6 +33,13 @@
         <p>{{sucursal}}</p>
       {% endfor %}
     </div>
+
+    <div class="tarjeta">
+      <h2>Mensajeros Asociados</h2>
+      {% for detalle in detalleMensajeros %}
+        <p>{{detalle.mensajero}}</p>
+      {% endfor %}
+    </div>
   </div>
 
 {% endblock content %}
