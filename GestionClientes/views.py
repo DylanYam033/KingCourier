@@ -123,7 +123,6 @@ def asignar_mensajeros(request, cliente_id):
             }) 
 
 # eliminar cliente
-
 @user_passes_test(lambda user: user.is_superuser)
 @login_required
 def eliminar_cliente(request, cliente_id):

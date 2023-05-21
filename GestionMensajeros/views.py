@@ -7,7 +7,6 @@ from GestionClientes.models import DetalleClienteMensajeros, Cliente
 # Create your views here.
 
 # listar mensajeros registrados
-
 def mensajero(request):
     mensajero = Mensajeros.objects.filter(activo=True)
     if mensajero.exists():
@@ -20,6 +19,7 @@ def mensajero(request):
             'message': message
         })
 
+# crear mensajero
 def create_mensajero(request):
     if request.method == 'GET':
         return render(request, 'mensajeros/create.html', {
@@ -46,7 +46,8 @@ def create_mensajero(request):
                 'createForm': data,
                 'error': 'Datos inválidos'
             })
-        
+
+# detalle de un mensajero
 def detalle_mensajero(request, mensajero_id):
     # Filtra los clientes cuyo mensajero es igual al del detalle
     detalle_clientes = DetalleClienteMensajeros.objects.filter(mensajero=mensajero_id)
@@ -56,6 +57,7 @@ def detalle_mensajero(request, mensajero_id):
         'detalle_clientes': detalle_clientes
         }
     )
+
 
 def clientes_mensajero(request):
     try:
@@ -77,7 +79,7 @@ def clientes_mensajero(request):
             'message': message
         })
 
-    
+# editar mensajero    
 def editar_mensajero(request, mensajero_id):
     mensajero = get_object_or_404(Mensajeros, pk=mensajero_id)
     if request.method == 'POST':
@@ -91,7 +93,7 @@ def editar_mensajero(request, mensajero_id):
         'form': form, 'mensajero': mensajero
     })
 
-
+# eliminar mensajero
 def eliminar_mensajero(request, mensajero_id):
     mensajero = Mensajeros.objects.get(id=mensajero_id)
     mensajero.activo = False
