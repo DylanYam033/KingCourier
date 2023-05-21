@@ -54,7 +54,7 @@
               <td>{{sucursal.cliente}}</td>
               <td> 
                 <a class="btn btn-info" href="{% url 'editar_sucursal' sucursal.id %}" role="button">Editar</a>             
-                <a class="btn btn-danger" href="{% url 'eliminar_sucursal' sucursal.id %}" role="button">Borrar</a>
+                <a class="btn btn-danger" href="{% url 'eliminar_sucursal' sucursal.id %}" role="button" onclick="return confirm('¿Estás Seguro de Borrar esta Sucursal?')">Borrar</a>
               </td>
             </tr>
             {% endfor %}

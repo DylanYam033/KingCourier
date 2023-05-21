@@ -56,7 +56,7 @@
                   <td>{{mensajero.vehiculo}}</td>
                   <td> 
                     <a class="btn btn-info" href="{% url 'editar_mensajero' mensajero.id %}" role="button">Editar</a>             
-                    <a class="btn btn-danger" href="{% url 'eliminar_mensajero' mensajero.id %}" role="button">Borrar</a>
+                    <a class="btn btn-danger" href="{% url 'eliminar_mensajero' mensajero.id %}" role="button" onclick="return confirm('¿Estás Seguro de Borrar este Mensajero?')">Borrar</a>
                   </td>
                 </tr>
               {% endfor %}

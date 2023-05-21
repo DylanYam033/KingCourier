@@ -39,7 +39,7 @@
               <th>Ciudad</th>
               <th>Propietario Cliente</th>
               <th>Propietario Mensajero</th>
-              <th>Acciones</th>
+              <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
@@ -53,7 +53,7 @@
               <td>{{user.propietario_cliente}}</td>
               <td>{{user.propietario_mensajero}}</td>
               <td>
-                <a class="btn btn-danger" href="{% url 'eliminar_usuario' user.id %}" role="button">Borrar</a>
+                <a class="btn btn-danger" href="{% url 'eliminar_usuario' user.id %}" role="button" onclick="return confirm('¿Estás Seguro de Borrar este Usuario?')">Borrar</a>
               </td>
             </tr>
             {% endfor %}
