@@ -9,4 +9,5 @@ urlpatterns = [
     path('', include("GestionClientes.urls")),
     path('welcome/', TemplateView.as_view(template_name='welcome.html'), name='welcome'),
     path('mensajeros/', include("GestionMensajeros.urls")),
+    path('pedidos/', include("GestionPedidos.urls")),
 ]

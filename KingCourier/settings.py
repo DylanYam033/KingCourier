@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'GestionMensajeros',
     'user',
     'login',
+    'GestionPedidos',
 ]
 
 MIDDLEWARE = [
