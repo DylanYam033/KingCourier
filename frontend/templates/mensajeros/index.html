@@ -6,6 +6,7 @@
     <link href="{% static 'styles/TableStyle.css' %}" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'scripts/SearchTable.js' %}"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 {% endblock head %}
 
 {% block header %}
@@ -56,9 +57,36 @@
                   <td>{{mensajero.vehiculo}}</td>
                   <td> 
                     <a class="btn btn-info" href="{% url 'editar_mensajero' mensajero.id %}" role="button">Editar</a>             
-                    <a class="btn btn-danger" href="{% url 'eliminar_mensajero' mensajero.id %}" role="button" onclick="return confirm('¿Estás Seguro de Borrar este Mensajero?')">Borrar</a>
+                    {% comment %} <a class="btn btn-danger" href="{% url 'eliminar_mensajero' mensajero.id %}" role="button" onclick="return confirm('¿Estás Seguro de Borrar este Mensajero?')">Borrar</a> {% endcomment %}
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal{{ mensajero.id }}">Borrar</button>
                   </td>
                 </tr>
+
+                <div class="modal fade" id="confirmModal{{ mensajero.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">
+                          <i class='bx bx-message-rounded-error bx-tada bx-lg' style='color:#DC3545'  ></i>
+      
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        ¿Estás Seguro de Borrar este Mensajero?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-danger" href="{% url 'eliminar_mensajero' mensajero.id %}">Borrar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
               {% endfor %}
             </tbody>
           </table>
