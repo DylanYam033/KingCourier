@@ -59,7 +59,6 @@
               <td> 
                 <a class="btn btn-info" href="{% url 'editar_cliente' cliente.id %}" role="button">Editar</a>
                 <a class="btn btn-primary" href="{% url 'asignar_mensajeros' cliente.id %}" role="button">Asignar Mensajero</a>
-                {% comment %} <a class="btn btn-danger" href="{% url 'eliminar_cliente' cliente.id %}" role="button" onclick="return confirm('¿Estás Seguro de Borrar este Cliente?')">Borrar</a> {% endcomment %}
                 <button class="btn btn-danger" data-toggle="modal" data-target="#confirmModal{{ cliente.id }}">Borrar</button>
               </td>
             </tr>
@@ -86,5 +85,6 @@
                 </div>
               </div>
             </div>
+            {% endfor %}
     
 {% endblock content %}
