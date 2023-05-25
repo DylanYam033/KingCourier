@@ -4,6 +4,7 @@ from .models import Pedido, DetalleEstadoPedido
 from user.models import User
 from django.db.models import Max, Subquery, OuterRef
 from itertools import zip_longest
+from .forms import PedidoForm
 
 # Create your views here.
 
@@ -33,4 +34,22 @@ def pedido(request):
     except User.DoesNotExist:
         message = "No eres propietario de ningún cliente"
         return render(request, 'pedidos/index.html', {'message': message})
+
+
+def create_pedido(request):
+    error_message = ''  # Inicializar la variable con un valor predeterminado
+    if request.method == 'POST':
+        form = PedidoForm(request.POST, user=request.user)
+        try:
+            if form.is_valid():
+                form.save()
+                return redirect('pedidos')
+        except Exception as e:
+            # Manejo del error, por ejemplo, mostrar un mensaje de error o realizar alguna acción adicional
+            error_message = str(e)
+            form.add_error(None, error_message)
+    else:
+        form = PedidoForm(user=request.user)
+    
+    return render(request, 'pedidos/create.html', {'form': form, 'error_message': error_message})
 

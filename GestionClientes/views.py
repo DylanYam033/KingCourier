@@ -105,8 +105,6 @@ def asignar_mensajeros(request, cliente_id):
             mensajero = data.cleaned_data['mensajero']
             info = DetalleClienteMensajeros.objects.filter(cliente=cliente_id)
             existe = info.filter(mensajero=mensajero).exists()
-            print(info.filter(mensajero=mensajero))
-            print(existe)
             if existe:
                 return render(request, 'clientes/asignarMensajero.html', {
                     'form': data,
