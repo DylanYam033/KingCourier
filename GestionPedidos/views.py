@@ -5,6 +5,8 @@ from user.models import User
 from django.db.models import Max, Subquery, OuterRef
 from itertools import zip_longest
 from .forms import PedidoForm
+from datetime import datetime
+
 
 # Create your views here.
 
@@ -49,7 +51,7 @@ def create_pedido(request):
             error_message = str(e)
             form.add_error(None, error_message)
     else:
-        form = PedidoForm(user=request.user)
+        form = PedidoForm(user=request.user, initial={'fecha_hora': datetime.now()})
     
     return render(request, 'pedidos/create.html', {'form': form, 'error_message': error_message})
 
