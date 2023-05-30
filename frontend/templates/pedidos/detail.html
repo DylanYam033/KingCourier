@@ -1,0 +1,24 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block head %}
+    <title>King Courier | Informacion del Pedido</title>
+    <link href="{% static 'styles/detailClientesStyle.css' %}" rel="stylesheet" />
+{% endblock head %}
+
+{% block content %}
+<div class="contenedor">
+    <div class="tarjeta">
+      <h2>Detalles del Pedido</h2>
+      <p>ID Pedido: {{ pedido.id }}</p>
+      <p>Cliente: {{ pedido.id_cliente.nombre }}</p>
+      <p>Mensajero Responsable: {{pedido.id_mensajero.nombre}}</p>
+      <p>Origen del Pedido: {{pedido.id_sucursal_origen.nombre}}</p>
+      <p>Destino del Pedido: {{pedido.id_sucursal_destino.nombre}}</p>
+      <p>Descripcion: {{pedido.descripcion}}</p>
+      <p>Tipo de Tranporte: {{pedido.tipo_trasnporte}}</p>
+      <p>Numero de paquetes: {{pedido.numero_paquetes}}</p>
+    </div>
+  
+{% endblock content %}

@@ -55,8 +55,8 @@
               <td>{{pedido.id_sucursal_destino.nombre}}</td>
               <td>{{detalle.id_estado.nombre}}</td>
               <td> 
-                <a class="btn btn-info" href="{% url 'editar_sucursal' pedido.id %}" role="button">Editar<a>             
-                <a class="btn btn-danger" href="{% url 'eliminar_sucursal' pedido.id %}" role="button">Borrar</a>  
+                <a class="btn btn-info" href="{% url 'detalle_pedido' pedido.id %}" role="button">Detalles<a>             
+                <a class="btn btn-danger" href="{% url 'cancelar_pedido' pedido.id %}" role="button">Cancelar</a>  
               </td>
             </tr>
             {% endfor %}

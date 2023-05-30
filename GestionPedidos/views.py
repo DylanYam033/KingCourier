@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .models import Pedido, DetalleEstadoPedido
+from .models import Pedido, DetalleEstadoPedido, EstadoPedido
 from user.models import User
 from django.db.models import Max, Subquery, OuterRef
 from itertools import zip_longest
@@ -10,19 +10,19 @@ from datetime import datetime
 
 # Create your views here.
 
-# listar pedidos de un cliente
+# listar pedidos de un pedido
 @login_required
 def pedido(request):
     try:
-        cliente = request.user.propietario_cliente
-        pedidos = Pedido.objects.filter(id_cliente=cliente)
+        pedido = request.user.propietario_cliente
+        pedidos = Pedido.objects.filter(id_cliente=pedido)
         
-        # Obtener la subconsulta para obtener la fecha_hora máxima para cada pedido del cliente
-        subquery = DetalleEstadoPedido.objects.filter(id_pedido__id_cliente_id=cliente).values('id_pedido').annotate(max_fecha_hora=Max('fecha_hora')).values('max_fecha_hora')
+        # Obtener la subconsulta para obtener la fecha_hora máxima para cada pedido del pedido
+        subquery = DetalleEstadoPedido.objects.filter(id_pedido__id_cliente_id=pedido).values('id_pedido').annotate(max_fecha_hora=Max('fecha_hora')).values('max_fecha_hora')
 
-        # Obtener los detalles de estado de pedido más recientes para cada pedido del cliente
+        # Obtener los detalles de estado de pedido más recientes para cada pedido del pedido
         detalles = DetalleEstadoPedido.objects.filter(
-            id_pedido__id_cliente_id=cliente,
+            id_pedido__id_cliente_id=pedido,
             fecha_hora__in=Subquery(subquery)
         )
 
@@ -34,7 +34,7 @@ def pedido(request):
             message = "No hay pedidos registrados"
             return render(request, 'pedidos/index.html', {'message': message})
     except User.DoesNotExist:
-        message = "No eres propietario de ningún cliente"
+        message = "No eres propietario de ningún pedido"
         return render(request, 'pedidos/index.html', {'message': message})
 
 
@@ -55,3 +55,15 @@ def create_pedido(request):
     
     return render(request, 'pedidos/create.html', {'form': form, 'error_message': error_message})
 
+
+def detalle_pedido(request, pedido_id):
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+    return render(request, 'pedidos/detail.html', {
+        'pedido': pedido,
+    })
+
+def cancelar_pedido(request, pedido_id):
+    estado_pedido = DetalleEstadoPedido.objects.get(id_pedido=pedido_id)
+    estado_pedido.id_estado = get_object_or_404(EstadoPedido, id=6)
+    estado_pedido.save()
+    return redirect('pedidos')
