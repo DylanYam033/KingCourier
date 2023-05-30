@@ -63,7 +63,15 @@ def detalle_pedido(request, pedido_id):
     })
 
 def cancelar_pedido(request, pedido_id):
-    estado_pedido = DetalleEstadoPedido.objects.get(id_pedido=pedido_id)
-    estado_pedido.id_estado = get_object_or_404(EstadoPedido, id=6)
-    estado_pedido.save()
+    # Obtener el pedido existente
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+    # Obtener el estado con la llave primaria 5
+    estado = get_object_or_404(EstadoPedido, pk=5)
+    # Crear un nuevo DetalleEstadoPedido
+    nuevo_estado_pedido = DetalleEstadoPedido.objects.create(
+        id_estado=estado,
+        id_pedido=pedido,
+        fecha_hora=datetime.now(),  # Establece la fecha y hora actual
+    )
+    nuevo_estado_pedido.save()
     return redirect('pedidos')
