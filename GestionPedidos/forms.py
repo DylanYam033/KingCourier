@@ -5,7 +5,7 @@ from GestionClientes.models import Sucursale, DetalleClienteMensajeros
 from django.utils import timezone
 
 class PedidoForm(forms.ModelForm):
-    estado = forms.ModelChoiceField(queryset=EstadoPedido.objects.all(), initial=EstadoPedido.objects.get(nombre='Pendiente'), widget=forms.HiddenInput())
+    estado = forms.ModelChoiceField(queryset=EstadoPedido.objects.all(), initial=EstadoPedido.objects.get(nombre='Solicitado'), widget=forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
@@ -26,7 +26,7 @@ class PedidoForm(forms.ModelForm):
     def save(self, commit=True):
         pedido = super().save(commit=False)
         fecha_hora = timezone.now()
-        estado = EstadoPedido.objects.get(nombre='Pendiente')  # Obtener la instancia de EstadoPedido
+        estado = EstadoPedido.objects.get(nombre='Solicitado')  # Obtener la instancia de EstadoPedido
         if commit:
             pedido.save()
             DetalleEstadoPedido.objects.create(id_pedido=pedido, id_estado=estado, fecha_hora=fecha_hora)

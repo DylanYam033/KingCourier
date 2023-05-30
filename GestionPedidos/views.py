@@ -65,8 +65,8 @@ def detalle_pedido(request, pedido_id):
 def cancelar_pedido(request, pedido_id):
     # Obtener el pedido existente
     pedido = get_object_or_404(Pedido, pk=pedido_id)
-    # Obtener el estado con la llave primaria 5
-    estado = get_object_or_404(EstadoPedido, pk=5)
+    # Obtener el estado con la llave primaria 4
+    estado = get_object_or_404(EstadoPedido, pk=6)
     # Crear un nuevo DetalleEstadoPedido
     nuevo_estado_pedido = DetalleEstadoPedido.objects.create(
         id_estado=estado,
