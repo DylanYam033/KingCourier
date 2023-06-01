@@ -26,7 +26,7 @@ class PedidoForm(forms.ModelForm):
     def save(self, commit=True):
         pedido = super().save(commit=False)
         fecha_hora = timezone.now()
-        estado = EstadoPedido.objects.get(nombre='Pendiente')  # Obtener la instancia de EstadoPedido
+        estado = EstadoPedido.objects.get(nombre='Solicitado')  # Obtener la instancia de EstadoPedido
         if commit:
             pedido.save()
             DetalleEstadoPedido.objects.create(id_pedido=pedido, id_estado=estado, fecha_hora=fecha_hora)
