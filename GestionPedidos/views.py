@@ -65,7 +65,7 @@ def detalle_pedido(request, pedido_id):
 def cancelar_pedido(request, pedido_id):
     # Obtener el pedido existente
     pedido = get_object_or_404(Pedido, pk=pedido_id)
-    # Obtener el estado con la llave primaria 4
+    # Obtener el estado cancelado por medio de su id
     estado = get_object_or_404(EstadoPedido, pk=6)
     # Crear un nuevo DetalleEstadoPedido
     nuevo_estado_pedido = DetalleEstadoPedido.objects.create(
@@ -75,3 +75,56 @@ def cancelar_pedido(request, pedido_id):
     )
     nuevo_estado_pedido.save()
     return redirect('pedidos')
+
+def pedido_mensajero(request):
+    try:
+        mensajero = request.user.propietario_mensajero
+        pedidos = Pedido.objects.filter(id_mensajero=mensajero)
+        
+        # Obtener la subconsulta para obtener la fecha_hora máxima para cada pedido del pedido
+        subquery = DetalleEstadoPedido.objects.filter(id_pedido__id_mensajero_id=mensajero).values('id_pedido').annotate(max_fecha_hora=Max('fecha_hora')).values('max_fecha_hora')
+
+        # Obtener los detalles de estado de pedido más recientes para cada pedido del pedido
+        detalles = DetalleEstadoPedido.objects.filter(
+            id_pedido__id_mensajero_id=mensajero,
+            fecha_hora__in=Subquery(subquery)
+        )
+
+        listas_combinadas = zip_longest(pedidos, detalles)
+
+        if pedidos.exists():
+            return render(request, 'pedidos/mensajeroPedidos.html', {'listas_combinadas': listas_combinadas})
+        else:
+            message = "No hay pedidos registrados"
+            return render(request, 'pedidos/mensajeroPedidos.html', {'message': message})
+    except User.DoesNotExist:
+        message = "No eres propietario de ningún pedido"
+        return render(request, 'pedidos/mensajeroPedidos.html', {'message': message})
+
+
+def cambiar_estado_pedido(request, pedido_id):
+    # Obtener el pedido existente
+    pedido = get_object_or_404(Pedido, pk=pedido_id)
+    
+    # Obtener todos los estados de pedido disponibles
+    estados = EstadoPedido.objects.all()
+    
+    if request.method == 'POST':
+        # Obtener el ID del estado seleccionado desde el formulario del template
+        id_estado_seleccionado = request.POST.get('estado_seleccionado')
+        
+        # Obtener el estado seleccionado por medio de su ID
+        estado_seleccionado = get_object_or_404(EstadoPedido, pk=id_estado_seleccionado)
+        
+        # Crear un nuevo DetalleEstadoPedido
+        nuevo_estado_pedido = DetalleEstadoPedido.objects.create(
+            id_estado=estado_seleccionado,
+            id_pedido=pedido,
+            fecha_hora=datetime.now(),  # Establecer la fecha y hora actual
+        )
+        
+        nuevo_estado_pedido.save()
+        return redirect('mensajero_pedidos')
+    
+    # Renderizar el template con los estados y el pedido
+    return render(request, 'pedidos/cambiar_estado.html', {'estados': estados, 'pedido': pedido})

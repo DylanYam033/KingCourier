@@ -68,9 +68,16 @@
       </li>
       {% endif %} 
       
-      {% if user.is_authenticated and user.propietario_cliente or user.propietario_mensajero %}
+      {% if user.is_authenticated and user.propietario_cliente %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'pedidos' %}">Pedidos</a>
+      </li>
+      {% endif %} 
+
+      {% comment %} pedidos del mensajero {% endcomment %}
+      {% if user.is_authenticated and user.propietario_mensajero %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'mensajero_pedidos' %}">Pedidos</a>
       </li>
       {% endif %} 
       
