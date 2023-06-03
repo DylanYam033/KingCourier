@@ -11,14 +11,19 @@
 <div class="contenedor">
     <div class="tarjeta">
       <h2>Detalles del Pedido</h2>
-      <p>ID Pedido: {{ pedido.id }}</p>
-      <p>Cliente: {{ pedido.id_cliente.nombre }}</p>
-      <p>Mensajero Responsable: {{pedido.id_mensajero.nombre}}</p>
-      <p>Origen del Pedido: {{pedido.id_sucursal_origen.nombre}}</p>
-      <p>Destino del Pedido: {{pedido.id_sucursal_destino.nombre}}</p>
-      <p>Descripcion: {{pedido.descripcion}}</p>
-      <p>Tipo de Tranporte: {{pedido.tipo_trasnporte}}</p>
-      <p>Numero de paquetes: {{pedido.numero_paquetes}}</p>
+      <p>ID Pedido: {{ pedido.id_pedido.id }}</p>
+      <p>Cliente: {{ pedido.id_pedido.id_cliente.nombre }}</p>
+      <p>Mensajero Responsable: {{pedido.id_pedido.id_mensajero.nombre}}</p>
+      <p>Origen del Pedido: {{pedido.id_pedido.id_sucursal_origen.nombre}}</p>
+      <p>Destino del Pedido: {{pedido.id_pedido.id_sucursal_destino.nombre}}</p>
+      <p>Descripcion: {{pedido.id_pedido.descripcion}}</p>
+      <p>Tipo de Tranporte: {{pedido.id_pedido.tipo_trasnporte}}</p>
+      <p>Numero de paquetes: {{pedido.id_pedido.numero_paquetes}}</p>
     </div>
-  
+    {% if pedido.foto %}
+      <img src="{{ pedido.foto.url }}" alt="Foto del detalle" width="70%">
+    {% else %}
+    <p>No hay foto disponible</p>
+    {% endif %}
+<div>
 {% endblock content %}
