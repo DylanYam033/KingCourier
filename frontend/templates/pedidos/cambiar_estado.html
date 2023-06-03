@@ -6,7 +6,49 @@
   <link href="{% static 'styles/FormStyle.css' %}" rel="stylesheet" />
 {% endblock head %} 
 
+
+
 {% block content %}
+
+  <h1 class="titulo">Cambiar Estado</h1>
+  <form method="POST" action="{% url 'cambiar_estado_pedido' pedido.id %}" enctype="multipart/form-data">  <!-- Agregar 'enctype' para manejar archivos -->
+    {% csrf_token %}
+    <label for="estado_seleccionado">Seleccionar estado:</label>
+    <select id="estado_seleccionado" name="estado_seleccionado">
+      {% for estado in estados %}
+        <option value="{{ estado.id }}">{{ estado.nombre }}</option>
+      {% endfor %}
+    </select>
+    <br>
+    <label for="foto">Imagen:</label>
+    <input type="file" id="foto" name="foto" onchange="mostrarPrevisualizacion(event)">
+    <br>
+    <div id="previsualizacion"></div>
+    <br>
+    <button type="submit">Cambiar estado</button>
+  </form>
+
+  <script>
+    function mostrarPrevisualizacion(event) {
+      var archivo = event.target.files[0];
+      var lector = new FileReader();
+
+      lector.onload = function (e) {
+        var imagenPrevia = document.createElement("img");
+        imagenPrevia.src = e.target.result;
+        imagenPrevia.style.maxWidth = "450px"; // Ajusta el tamaño de la imagen previsualizada según tus necesidades
+        document.getElementById("previsualizacion").innerHTML = "";
+        document.getElementById("previsualizacion").appendChild(imagenPrevia);
+      };
+
+      lector.readAsDataURL(archivo);
+    }
+  </script>
+  
+{% endblock content %}
+
+
+{% comment %} {% block content %}
 
   <h1 class="titulo">Cambiar Estado</h1>
   <form method="POST" action="{% url 'cambiar_estado_pedido' pedido.id %}" enctype="multipart/form-data">  <!-- Agregar 'enctype' para manejar archivos -->
@@ -24,4 +66,4 @@
     <button type="submit">Cambiar estado</button>
   </form>
   
-{% endblock content %}
+{% endblock content %} {% endcomment %}
