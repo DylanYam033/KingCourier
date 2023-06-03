@@ -14,22 +14,19 @@ from datetime import datetime
 @login_required
 def pedido(request):
     try:
-        pedido = request.user.propietario_cliente
-        pedidos = Pedido.objects.filter(id_cliente=pedido)
+        cliente = request.user.propietario_cliente
         
         # Obtener la subconsulta para obtener la fecha_hora máxima para cada pedido del pedido
-        subquery = DetalleEstadoPedido.objects.filter(id_pedido__id_cliente_id=pedido).values('id_pedido').annotate(max_fecha_hora=Max('fecha_hora')).values('max_fecha_hora')
+        subquery = DetalleEstadoPedido.objects.filter(id_pedido__id_cliente_id=cliente).values('id_pedido').annotate(max_fecha_hora=Max('fecha_hora')).values('max_fecha_hora')
 
         # Obtener los detalles de estado de pedido más recientes para cada pedido del pedido
         detalles = DetalleEstadoPedido.objects.filter(
-            id_pedido__id_cliente_id=pedido,
+            id_pedido__id_cliente_id=cliente,
             fecha_hora__in=Subquery(subquery)
         )
 
-        listas_combinadas = zip_longest(pedidos, detalles)
-
-        if pedidos.exists():
-            return render(request, 'pedidos/index.html', {'listas_combinadas': listas_combinadas})
+        if detalles.exists():
+            return render(request, 'pedidos/index.html', {'detalles': detalles})
         else:
             message = "No hay pedidos registrados"
             return render(request, 'pedidos/index.html', {'message': message})
@@ -79,7 +76,6 @@ def cancelar_pedido(request, pedido_id):
 def pedido_mensajero(request):
     try:
         mensajero = request.user.propietario_mensajero
-        pedidos = Pedido.objects.filter(id_mensajero=mensajero)
         
         # Obtener la subconsulta para obtener la fecha_hora máxima para cada pedido del pedido
         subquery = DetalleEstadoPedido.objects.filter(id_pedido__id_mensajero_id=mensajero).values('id_pedido').annotate(max_fecha_hora=Max('fecha_hora')).values('max_fecha_hora')
@@ -90,10 +86,8 @@ def pedido_mensajero(request):
             fecha_hora__in=Subquery(subquery)
         )
 
-        listas_combinadas = zip_longest(pedidos, detalles)
-
-        if pedidos.exists():
-            return render(request, 'pedidos/mensajeroPedidos.html', {'listas_combinadas': listas_combinadas})
+        if detalles.exists():
+            return render(request, 'pedidos/mensajeroPedidos.html', {'detalles': detalles})
         else:
             message = "No hay pedidos registrados"
             return render(request, 'pedidos/mensajeroPedidos.html', {'message': message})
