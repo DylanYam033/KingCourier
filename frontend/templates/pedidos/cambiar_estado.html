@@ -9,7 +9,7 @@
 {% block content %}
 
   <h1 class="titulo">Cambiar Estado</h1>
-  <form method="POST" action="{% url 'cambiar_estado_pedido' pedido.id %}">
+  <form method="POST" action="{% url 'cambiar_estado_pedido' pedido.id %}" enctype="multipart/form-data">  <!-- Agregar 'enctype' para manejar archivos -->
     {% csrf_token %}
     <label for="estado_seleccionado">Seleccionar estado:</label>
     <select id="estado_seleccionado" name="estado_seleccionado">
@@ -17,8 +17,11 @@
         <option value="{{ estado.id }}">{{ estado.nombre }}</option>
       {% endfor %}
     </select>
+    <br>
+    <label for="foto">Imagen:</label>
+    <input type="file" id="foto" name="foto">
+    <br>
     <button type="submit">Cambiar estado</button>
   </form>
   
-
 {% endblock content %}

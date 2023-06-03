@@ -117,6 +117,10 @@ def cambiar_estado_pedido(request, pedido_id):
             fecha_hora=datetime.now(),  # Establecer la fecha y hora actual
         )
         
+        foto = request.FILES.get('foto')  # Obtener el archivo de imagen enviado
+        if foto:
+            nuevo_estado_pedido.foto = foto
+
         nuevo_estado_pedido.save()
         return redirect('mensajero_pedidos')
     
