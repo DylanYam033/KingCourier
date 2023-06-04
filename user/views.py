@@ -34,15 +34,18 @@ def users_list(request):
 
 def edit_profile(request):
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=request.user)
+        form = UserForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
+            user = form.save(commit=False)
+            new_profile_photo = form.cleaned_data.get('profile_photo')
+            if new_profile_photo:
+                user.profile_photo = new_profile_photo
             form.save()
-            return redirect('users')
+            return redirect('perfil')
     else:
         form = UserForm(instance=request.user)
-    return render(request, 'login/edit_profile.html', {
-        'form': form
-        })
+
+    return render(request, 'login/edit_profile.html', {'form': form})
 
 @user_passes_test(lambda user: user.is_superuser)
 def eliminar_usuario(request, user_id):

@@ -12,3 +12,4 @@ class User(AbstractUser):
     city = models.CharField("Ciudad", max_length=100)
     propietario_cliente = models.ForeignKey(modelos_g_clientes.Cliente, on_delete=models.CASCADE, null=True, blank=True)
     propietario_mensajero = models.ForeignKey(modelos_g_mensajeros.Mensajeros, on_delete=models.CASCADE, null=True, blank=True)
+    profile_photo = models.ImageField(upload_to='profile_photo', null=True, blank=True)
