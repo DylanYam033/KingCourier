@@ -46,17 +46,17 @@
             </tr>
           </thead>
           <tbody>
-            {% for pedido, detalle in listas_combinadas %}
+            {% for detalle in detalles %}
             <tr>
-              <td>{{pedido.id}}</td>
-              <td>{{pedido.id_cliente.nombre}}</td>
-              <td>{{pedido.id_mensajero.nombre}}</td>
-              <td>{{pedido.id_sucursal_origen.nombre}}</td>
-              <td>{{pedido.id_sucursal_destino.nombre}}</td>
-              <td>{{detalle.id_estado.nombre}}</td>
+              <td>{{detalle.id_pedido.id}}</td>
+              <td>{{detalle.id_pedido.id_cliente}}</td>
+              <td>{{detalle.id_pedido.id_mensajero}}</td>
+              <td>{{detalle.id_pedido.id_sucursal_origen}}</td>
+              <td>{{detalle.id_pedido.id_sucursal_destino}}</td>
+              <td>{{detalle.id_estado}}</td>
               <td> 
-                <a class="btn btn-info" href="{% url 'detalle_pedido' pedido.id %}" role="button">Detalles<a>             
-                <a class="btn btn-primary" href="{% url 'cambiar_estado_pedido' pedido.id %}" role="button">Cambiar Estado</a>  
+                <a class="btn btn-info" href="{% url 'detalle_pedido' detalle.id_pedido.id %}" role="button">Detalles<a>             
+                <a class="btn btn-primary" href="{% url 'cambiar_estado_pedido' detalle.id_pedido.id %}" role="button">Cambiar Estado</a>  
               </td>
             </tr>
             {% endfor %}

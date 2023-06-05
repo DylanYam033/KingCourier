@@ -14,7 +14,7 @@
 {% endblock header %}
 
 {% block content %}
-<h1 class="text-center"> Tus Pedidos</h1>
+<h1 class="text-center"> Reporte de pedidos por Cliente</h1>
   {% if message %}
     <div class="alert alert-info" role="alert">
       {{message}}
@@ -24,39 +24,42 @@
 
     <div class="search-container d-flex justify-content-between align-items-center mb-3">
       <div class="mr-4 ml-4 btnCreate">
-        <a class="btn btn-success w-150" href="{% url 'create_pedido' %}" role="button">Nuevo Pedido</a>
+        <a class="btn btn-success w-150" href="{% url 'create_pedido' %}" role="button">Generar Reporte</a>
+      </div>
+      <div class="">
+        <a class="btn btn-primary w-150" href="{% url 'reporte_pedido_fecha' %}" role="button">Reporte por mes de creacion</a>
       </div>
       <div class="mr-4 search">
-        <input type="text" class="form-control w-300" id="search-input" placeholder="Buscar...">
+        <input type="text" class="form-control w-300" id="search-input" placeholder="Pedidos por cliente...">
       </div>
     </div>
-
+  
     <div class="card-body">
       <div class="table-responsive">
         <table class="table">
+          <caption>Listado de Pedidos por cliente</caption>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Cliente</th>
-              <th>Mensajero</th>
               <th>Sucursal</th>
               <th>Destino</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+              <th>Transporte</th>
+              <th>Numero Paquetes</th>
+              <th>Descripcion</th>
+              <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
-            {% for detalle in detalles %}
+            {% for pedido in pedidos %}
             <tr>
-              <td>{{detalle.id_pedido.id}}</td>
-              <td>{{detalle.id_pedido.id_cliente}}</td>
-              <td>{{detalle.id_pedido.id_mensajero}}</td>
-              <td>{{detalle.id_pedido.id_sucursal_origen}}</td>
-              <td>{{detalle.id_pedido.id_sucursal_destino}}</td>
-              <td>{{detalle.id_estado}}</td>
+              <td>{{pedido.id_cliente}}</td>
+              <td>{{pedido.id_sucursal_origen}}</td>
+              <td>{{pedido.id_sucursal_destino}}</td>
+              <td>{{pedido.tipo_trasnporte}}</td>
+              <td>{{pedido.numero_paquetes}}</td>
+              <td>{{pedido.descripcion}}</td>
               <td> 
-                <a class="btn btn-info" href="{% url 'detalle_pedido' detalle.id_pedido.id %}" role="button">Detalles<a>             
-                <a class="btn btn-danger" href="{% url 'cancelar_pedido' detalle.id_pedido.id %}" role="button">Cancelar</a>  
+                <a class="btn btn-info" href="{% url 'detalle_pedido' pedido.id %}" role="button">Detalles<a>             
               </td>
             </tr>
             {% endfor %}

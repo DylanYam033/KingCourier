@@ -8,7 +8,17 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'num_phone', 'address', 'city', 'propietario_cliente', 'propietario_mensajero')
+        fields = ('username', 'email', 'num_phone', 'address', 'city', 'propietario_cliente', 'propietario_mensajero', 'profile_photo')
+
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
+        instance = kwargs.get('instance')
+        if instance:
+            # Si se está editando un perfil existente, se ocultan los campos específicos
+            self.fields.pop('propietario_cliente')
+            self.fields.pop('propietario_mensajero')
+            self.fields.pop('password1')
+            self.fields.pop('password2')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1')
@@ -19,8 +29,13 @@ class UserForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password1'])
+        password1 = self.cleaned_data.get('password1')
+        if password1:
+            user.set_password(password1)
         if commit:
             user.save()
         return user
+
+
+
 
