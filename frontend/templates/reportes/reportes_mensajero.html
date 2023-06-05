@@ -1,0 +1,73 @@
+{% extends 'layouts/base.html' %} 
+
+{% load static %}
+
+{% block head %}
+    <title>King Courier | Tus pedidos</title>
+    <link href="{% static 'styles/TableStyle.css' %}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{% static 'scripts/SearchTable.js' %}"></script>
+{% endblock head %}
+
+{% block header %}
+    {% include 'layouts/navbar.html' %}
+{% endblock header %}
+
+{% block content %}
+<h1 class="text-center"> Reporte de pedidos por mensajero</h1>
+  {% if message %}
+    <div class="alert alert-info" role="alert">
+      {{message}}
+    </div>
+  {% endif %}
+
+
+    <div class="search-container d-flex justify-content-between align-items-center mb-3">
+      <div class="mr-4 ml-4 btnCreate">
+        <a class="btn btn-success w-150" href="{% url 'reporte_pedido_mensajero' %}" role="button">Generar Reporte</a>
+      </div>
+      <div class="">
+        <a class="btn btn-primary w-150" href="{% url 'reporte_pedido_cliente' %}" role="button">Reporte por Cliente</a>
+      </div>
+      <div class="mr-4 search">
+        <input type="text" class="form-control w-300" id="search-input" placeholder="Pedidos por mensajero...">
+      </div>
+    </div>
+  
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <caption>Listado de Pedidos por mensajero</caption>
+          <thead>
+            <tr>
+              <th>Mensajero</th>
+              <th>Sucursal</th>
+              <th>Destino</th>
+              <th>Transporte</th>
+              <th>Numero Paquetes</th>
+              <th>Descripcion</th>
+              <th>Fecha de creacion</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pedido in pedidos %}
+            <tr>
+              <td>{{pedido.id_mensajero}}</td>
+              <td>{{pedido.id_sucursal_origen}}</td>
+              <td>{{pedido.id_sucursal_destino}}</td>
+              <td>{{pedido.tipo_trasnporte}}</td>
+              <td>{{pedido.numero_paquetes}}</td>
+              <td>{{pedido.descripcion}}</td>
+              <td>{{pedido.created}}</td>
+              <td> 
+                <a class="btn btn-info" href="{% url 'detalle_pedido' pedido.id %}" role="button">Detalles<a>             
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+{% endblock content %} 

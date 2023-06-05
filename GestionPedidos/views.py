@@ -135,3 +135,20 @@ def cambiar_estado_pedido(request, pedido_id):
 
     # Renderizar el template con los estados y el pedido
     return render(request, 'pedidos/cambiar_estado.html', {'estados': estados, 'pedido': pedido})
+
+
+def reporte_pedidos_cliente(request):
+    # Obtener todos los pedidos
+    pedidos = Pedido.objects.all()
+    return render(request, 'reportes/reportes_cliente.html', {'pedidos': pedidos})
+
+def reporte_pedidos_fecha(request):
+    # Obtener todos los pedidos
+    pedidos = Pedido.objects.all()
+    return render(request, 'reportes/reportes_mes.html', {'pedidos': pedidos})
+
+def reporte_pedidos_mensajero(request):
+    # Obtener todos los pedidos
+    pedidos = Pedido.objects.all()
+    return render(request, 'reportes/reportes_mensajero.html', {'pedidos': pedidos})
+
