@@ -7,6 +7,14 @@
     <link href="{% static 'styles/TableStyle.css' %}" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'scripts/SearchTable.js' %}"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 {% endblock head %}
 
 {% block header %}
@@ -66,6 +74,72 @@
           </tbody>
         </table>
       </div>
+    </div>
+
+    <div id="container" style="width: 100%; height: 400px;">
+      <script>
+        // Obtén los datos de pedidos_por_cliente desde el contexto de Django
+        let pedidosMesData = JSON.parse('{{ pedidos_mes|escapejs }}');
+
+        // Crea un array vacío para almacenar los datos del gráfico
+        let chartData = [];
+
+        // Itera sobre los datos de pedidos_por_cliente y crea un objeto de datos para cada cliente
+        pedidosMesData.forEach(function(pedido) {
+          let pedidosData = {
+            name: pedido.toString(),
+            y: pedido.cantidad_pedidos
+          };
+          chartData.push(pedidosData);
+        });
+
+        // Crea el gráfico Highcharts con los datos dinámicos
+        Highcharts.chart('container', {
+          chart: {
+            type: 'column'
+          },
+          title: {
+            align: 'center',
+            text: 'Cantidad de pedidos por Mes'
+          },
+          accessibility: {
+            announceNewData: {
+              enabled: true
+            }
+          },
+          xAxis: {
+            type: 'category'
+          },
+          yAxis: {
+            title: {
+              text: 'Cantidad de Pedidos'
+            }
+          },
+          legend: {
+            enabled: false
+          },
+          plotOptions: {
+            series: {
+              borderWidth: 0,
+              dataLabels: {
+                enabled: true,
+                format: '{point.y:.0f} pedidos'
+              }
+            }
+          },
+          tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> pedidos<br/>'
+          },
+          series: [
+            {
+              name: 'Cliente',
+              colorByPoint: true,
+              data: chartData
+            }
+          ]
+        });
+      </script>
     </div>
 
 {% endblock content %} 
