@@ -6,11 +6,14 @@ from django.db.models import Max, Subquery, OuterRef
 from itertools import zip_longest
 from .forms import PedidoForm
 from datetime import datetime
-
+from django.db.models import Count
+import json
 
 # Create your views here.
 
 # listar pedidos de un pedido
+
+
 @login_required
 def pedido(request):
     try:
@@ -57,12 +60,14 @@ def create_pedido(request):
 
 def detalle_pedido(request, pedido_id):
     # Obtener el último registro del detalle del pedido
-    ultimo_detalle = DetalleEstadoPedido.objects.filter(id_pedido=pedido_id).latest('fecha_hora')
+    ultimo_detalle = DetalleEstadoPedido.objects.filter(
+        id_pedido=pedido_id).latest('fecha_hora')
 
     # Renderizar la plantilla con el detalle del pedido
     return render(request, 'pedidos/detail.html', {
         'pedido': ultimo_detalle,
     })
+
 
 def cancelar_pedido(request, pedido_id):
     # Obtener el pedido existente
@@ -138,17 +143,27 @@ def cambiar_estado_pedido(request, pedido_id):
 
 
 def reporte_pedidos_cliente(request):
+    # Obtener todos los pedidos con la cantidad de pedidos por cliente
+    pedidos_por_cliente = Pedido.objects.values('id_cliente', 'id_cliente__nombre').annotate(cantidad_pedidos=Count('id_cliente'))
+
+    # Convertir pedidos_por_cliente a una lista de diccionarios
+    pedidos_por_cliente_list = list(pedidos_por_cliente)
+
     # Obtener todos los pedidos
     pedidos = Pedido.objects.all()
-    return render(request, 'reportes/reportes_cliente.html', {'pedidos': pedidos})
+    return render(request, 'reportes/reportes_cliente.html', {
+        'pedidos': pedidos,
+        'pedidos_cliente': json.dumps(pedidos_por_cliente_list)
+    })
+
 
 def reporte_pedidos_fecha(request):
     # Obtener todos los pedidos
     pedidos = Pedido.objects.all()
     return render(request, 'reportes/reportes_mes.html', {'pedidos': pedidos})
 
+
 def reporte_pedidos_mensajero(request):
     # Obtener todos los pedidos
     pedidos = Pedido.objects.all()
     return render(request, 'reportes/reportes_mensajero.html', {'pedidos': pedidos})
-
