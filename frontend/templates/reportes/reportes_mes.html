@@ -15,6 +15,7 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 {% endblock head %}
 
 {% block header %}
@@ -22,6 +23,7 @@
 {% endblock header %}
 
 {% block content %}
+
 <h1 class="text-center"> Reporte de pedidos por mes</h1>
   {% if message %}
     <div class="alert alert-info" role="alert">
@@ -80,14 +82,44 @@
       <script>
         // Obtén los datos de pedidos_por_cliente desde el contexto de Django
         let pedidosMesData = JSON.parse('{{ pedidos_mes|escapejs }}');
-
+        console.log(pedidosMesData);
         // Crea un array vacío para almacenar los datos del gráfico
         let chartData = [];
 
         // Itera sobre los datos de pedidos_por_cliente y crea un objeto de datos para cada cliente
         pedidosMesData.forEach(function(pedido) {
           let pedidosData = {
-            name: pedido.toString(),
+            name: (() => {
+              switch (pedido.mes_creacion) {
+                case 1:
+                  return "Enero";
+                case 2:
+                  return "Febrero";
+                case 3:
+                  return "Marzo";
+                case 4:
+                  return "Abril";
+                case 5:
+                  return "Mayo";
+                case 6:
+                  return "Junio";
+                case 7:
+                  return "Julio";
+                case 8:
+                  return "Agosto";
+                case 9:
+                  return "Septiembre";
+                case 10:
+                  return "Octubre";
+                case 11:
+                  return "Noviembre";
+                case 12:
+                  return "Diciembre";
+                default:
+                  return pedido.mes_creacion.toString();
+              }
+            })(),
+
             y: pedido.cantidad_pedidos
           };
           chartData.push(pedidosData);

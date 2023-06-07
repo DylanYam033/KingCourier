@@ -13,7 +13,7 @@ class Pedido(models.Model):
     descripcion = models.CharField(max_length=100)
     tipo_trasnporte = models.CharField(max_length=20)
     numero_paquetes = models.CharField(max_length=100)
-    created = models.DateTimeField(auto_now_add=True, editable=False)
+    created = models.DateTimeField(auto_now_add=True, editable=True)
    
     def __str__(self):
         return str(self.id_cliente) + " - " + str(self.id_mensajero)
