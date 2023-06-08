@@ -9,6 +9,9 @@ from datetime import datetime
 from django.db.models import Count
 from django.db.models.functions import ExtractMonth
 import json
+from .utils import render_to_pdf
+from django.views.generic import View
+from django.http import HttpResponse
 
 # Create your views here.
 
@@ -187,4 +190,13 @@ def reporte_pedidos_mensajero(request):
         'pedidos': pedidos,
         'pedidos_mensajero': json.dumps(pedidos_por_mensajero_list)
     })
-    
+
+class ListPedidos_mensajeroPdf(View):
+    def get(self, request, *args, **kwargs):
+        pedidos = Pedido.objects.all()
+        data = {
+            'pedidos': pedidos,
+        }
+        pdf = render_to_pdf('reportes/reportes_mensajero.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
+        
