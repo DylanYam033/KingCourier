@@ -160,9 +160,17 @@ def reporte_pedidos_cliente(request):
         'pedidos_cliente': json.dumps(pedidos_por_mensajero_list)
     })
 
+class ListPedidos_clientesPdf(View):
+    def get(self, request, *args, **kwargs):
+        pedidos = Pedido.objects.all()
+        data = {
+            'pedidos': pedidos,
+        }
+        pdf = render_to_pdf('reportes/reportes_cliente.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
+
 
 def reporte_pedidos_fecha(request):
-
      # Obtener los pedidos agrupados por mes de creación
     pedidos_por_mes = Pedido.objects.annotate(mes_creacion=ExtractMonth('created')) \
         .values('mes_creacion') \
@@ -175,6 +183,15 @@ def reporte_pedidos_fecha(request):
     pedidos = Pedido.objects.all()
 
     return render(request, 'reportes/reportes_mes.html', {'pedidos': pedidos, 'pedidos_mes': json.dumps(pedidos_por_mes_list)})
+
+class ListPedidos_mesesPdf(View):
+    def get(self, request, *args, **kwargs):
+        pedidos = Pedido.objects.all()
+        data = {
+            'pedidos': pedidos,
+        }
+        pdf = render_to_pdf('reportes/reportes_mes.html', data)
+        return HttpResponse(pdf, content_type='application/pdf')
 
 
 def reporte_pedidos_mensajero(request):

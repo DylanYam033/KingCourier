@@ -30,17 +30,20 @@
   {% endif %}
 
 
-    <div class="search-container d-flex justify-content-between align-items-center mb-3">
+    <div class="search-container d-flex justify-content-start align-items-center mb-3">
       <div class="mr-4 ml-4 btnCreate">
-        <a class="btn btn-success w-150" href="{% url 'reporte_pedido_mensajero_pdf' %}" role="button">Generar Reporte</a>
+        <a class="btn btn-success w-150" href="{% url 'reporte_pedido_mensajero_pdf' %}" role="button" target="_blank">Generar Reporte</a>
       </div>
       <div class="">
         <a class="btn btn-primary w-150" href="{% url 'reporte_pedido_cliente' %}" role="button">Reporte por Cliente</a>
       </div>
+    </div>
+    <div class="d-flex justify-content-end">
       <div class="mr-4 search">
         <input type="text" class="form-control w-300" id="search-input" placeholder="Pedidos por mensajero...">
       </div>
     </div>
+    
   
     <div class="card-body">
       <div class="table-responsive">
@@ -78,7 +81,7 @@
       </div>
     </div>
 
-    <div id="container" style="width: 100%; height: 400px;">
+    <div id="container" class="mx-3">
       <script>
         // Obtén los datos de pedidos_por_cliente desde el contexto de Django
         let pedidosClienteData = JSON.parse('{{ pedidos_mensajero|escapejs }}');
